@@ -7,48 +7,117 @@
     <link rel="stylesheet" href="frontend/src/index.css">
 </head>
 
-<header>
-    <nav id="menu">
-     <p>Menu</p>
-       <menu>
-        <Li>Estilos</Li> 
-        <li>Cidade</li> 
-        <li>Promoção</li>
-        <li>Valores</li>
-       </menu>
-    </nav>
-           Pesquise Aqui
-</header>
-<hr>
 <body>
-   <img src="" alt="#">
-    <h1>Bem Vindo!!</h1>
-    <h2>Aqui você encontra os melhores tatuadores perto de você</h2>
+    <header>
+        <nav id="menu">
+            <div id="auth-section">
+                <a href="#login">Login</a> | 
+                <a href="#cadastro">Cadastre-se</a>
+            </div>
+            
+            <ul>
+                <li>Estilos</li> 
+                <li>Cidade</li> 
+                <li>Promoção</li>
+                <li>Valores</li>
+            </ul>
+            
+            <div id="search">
+                <input type="text" placeholder="Pesquise Aqui">
+            </div>
+        </nav>
+        <hr>
+    </header>
 
-    <button>Procurar</button>
+    <main>
+        <section id="banner">
+            <img src="imagens/banner.jpg" alt="Banner Tattoo Around">
+            <h1>Bem Vindo!!</h1>
+            <h2>Aqui você encontra os melhores tatuadores perto de você</h2>
+            <button>Procurar</button>
+        </section>
 
-<h1>Veja aqui alguns tatuadores!</h1>
-<div id="tatuadores">
-    <div id="tatuador-1">
-    ...
-    </div>
-    <div id="tatuador-2">
-    ...
-    </div>
-    <div id="tatuador-3">
-    ...
-    </div>
-    <div id="tatuador-4">
-    ...
-    </div>
-    <div id="tatuador-5">
-    ...
-    </div>
-</div>
+        <section id="tatuadores">
+            <h1>Veja aqui alguns tatuadores!</h1>
+            
+            <div class="cards-container">
+                <!-- Card de Tatuador -->
+                <div class="tatuador-card">
+                    <img src="imagens/tatuador1.jpg" alt="Foto do Tatuador" class="perfil">
+                    <div class="info">
+                        <h3>Nome do Tatuador</h3>
+                        <p>Cidade: São Paulo</p>
+                        <p>Clientes/mês: 15</p>
+                        <p>Limite diário: 3 clientes</p>
+                    </div>
+                    <div class="botoes">
+                        <button class="portfolio">Ver Portfólio</button>
+                        <button class="contato">Entrar em Contato</button>
+                    </div>
 
+                    <div class="tatuador-card">
+                        <img src="imagens/tatuador1.jpg" alt="Foto do Tatuador" class="perfil">
+                        <div class="info">
+                            <h3>Nome do Tatuador</h3>
+                            <p>Cidade: São Paulo</p>
+                            <p>Clientes/mês: 15</p>
+                            <p>Limite diário: 3 clientes</p>
+                        </div>
+                        <div class="botoes">
+                            <button class="portfolio">Ver Portfólio</button>
+                            <button class="contato">Entrar em Contato</button>
+                        </div>
+
+                        <div class="tatuador-card">
+                            <img src="imagens/tatuador1.jpg" alt="Foto do Tatuador" class="perfil">
+                            <div class="info">
+                                <h3>Nome do Tatuador</h3>
+                                <p>Cidade: São Paulo</p>
+                                <p>Clientes/mês: 15</p>
+                                <p>Limite diário: 3 clientes</p>
+                            </div>
+                            <div class="botoes">
+                                <button class="portfolio">Ver Portfólio</button>
+                                <button class="contato">Entrar em Contato</button>
+                            </div>
+
+                            <div class="tatuador-card">
+                                <img src="imagens/tatuador1.jpg" alt="Foto do Tatuador" class="perfil">
+                                <div class="info">
+                                    <h3>Nome do Tatuador</h3>
+                                    <p>Cidade: São Paulo</p>
+                                    <p>Clientes/mês: 15</p>
+                                    <p>Limite diário: 3 clientes</p>
+                                </div>
+                                <div class="botoes">
+                                    <button class="portfolio">Ver Portfólio</button>
+                                    <button class="contato">Entrar em Contato</button>
+                                </div>
+
+                                <div class="tatuador-card">
+                                    <img src="imagens/tatuador1.jpg" alt="Foto do Tatuador" class="perfil">
+                                    <div class="info">
+                                        <h3>Nome do Tatuador</h3>
+                                        <p>Cidade: São Paulo</p>
+                                        <p>Clientes/mês: 15</p>
+                                        <p>Limite diário: 3 clientes</p>
+                                    </div>
+                                    <div class="botoes">
+                                        <button class="portfolio">Ver Portfólio</button>
+                                        <button class="contato">Entrar em Contato</button>
+                                    </div>  
+                </div>
+
+                <!-- Repetir a estrutura do card para outros tatuadores -->
+                <!-- Adicione mais 4 cards seguindo o mesmo padrão -->
+                
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <hr>
+        <p>&copy; TattooAround - 2025</p>
+    </footer>
 </body>
-<hr>
-<footer>
-    &copy; tattooAround - 2025
-</footer>
 </html>
