@@ -15,6 +15,48 @@ const App = () => {
       image: "/imagens/tatuador1.jpg"
     },
     // Adicione mais artistas aqui
+    const mockArtists = [
+      {
+        id: 2,
+        name: "João Tattoo",
+        city: "São Paulo",
+        rating: 4.5,
+        profileImage: "/images/artist1.jpg",
+        portfolio: ["/images/work1.jpg", "/images/work2.jpg"]
+      }
+    ];
+    const mockArtists = [
+      {
+        id: 3,
+        name: "João Tattoo",
+        city: "São Paulo",
+        rating: 4.5,
+        profileImage: "/images/artist1.jpg",
+        portfolio: ["/images/work1.jpg", "/images/work2.jpg"]
+      }
+    ];
+
+    const mockArtists = [
+      {
+        id: 4,
+        name: "João Tattoo",
+        city: "São Paulo",
+        rating: 4.5,
+        profileImage: "/images/artist1.jpg",
+        portfolio: ["/images/work1.jpg", "/images/work2.jpg"]
+      }
+    ];
+
+    const mockArtists = [
+      {
+        id: 5,
+        name: "João Tattoo",
+        city: "São Paulo",
+        rating: 4.5,
+        profileImage: "/images/artist1.jpg",
+        portfolio: ["/images/work1.jpg", "/images/work2.jpg"]
+      }
+    ];
   ];
 
   return (
