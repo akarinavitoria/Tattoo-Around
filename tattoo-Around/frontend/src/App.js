@@ -1,25 +1,48 @@
-import logo from './logo.svg';
+import React from 'react';
+import Header from './components/Header/Header';
+import Banner from './components/Banner/Banner';
+import TattooArtistCard from './components/TattooArtistCard/TattooArtistCard';
 import './App.css';
 
-function App() {
+const App = () => {
+  const tattooArtists = [
+    {
+      id: 1,
+      name: "Artista 1",
+      city: "São Paulo",
+      clientsPerMonth: 15,
+      dailyLimit: 3,
+      image: "/imagens/tatuador1.jpg"
+    },
+    // Adicione mais artistas aqui
+  ];
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      
+      <main>
+        <Banner />
+        
+        <section className="artists-section">
+          <h1>Veja aqui alguns tatuadores!</h1>
+          <div className="artists-grid">
+            {tattooArtists.map(artist => (
+              <TattooArtistCard 
+                key={artist.id} 
+                artist={artist} 
+              />
+            ))}
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <hr />
+        <p>&copy; TattooAround - 2025</p>
+      </footer>
     </div>
   );
-}
+};
 
 export default App;

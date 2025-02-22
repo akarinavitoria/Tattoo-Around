@@ -1,0 +1,21 @@
+.header {
+    background-color: #1a1a1a;
+    color: white;
+    padding: 1rem;
+  }
+  
+  .menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .authSection a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s;
+  }
+  
+  /* Continue com os outros estilos seguindo o CSS original */
