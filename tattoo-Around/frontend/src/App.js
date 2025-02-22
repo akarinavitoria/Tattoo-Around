@@ -15,48 +15,46 @@ const App = () => {
       image: "/imagens/tatuador1.jpg"
     },
     // Adicione mais artistas aqui
-    const mockArtists = [
-      {
-        id: 2,
-        name: "João Tattoo",
-        city: "São Paulo",
-        rating: 4.5,
-        profileImage: "/images/artist1.jpg",
-        portfolio: ["/images/work1.jpg", "/images/work2.jpg"]
-      }
-    ];
-    const mockArtists = [
-      {
-        id: 3,
-        name: "João Tattoo",
-        city: "São Paulo",
-        rating: 4.5,
-        profileImage: "/images/artist1.jpg",
-        portfolio: ["/images/work1.jpg", "/images/work2.jpg"]
-      }
-    ];
-
-    const mockArtists = [
-      {
-        id: 4,
-        name: "João Tattoo",
-        city: "São Paulo",
-        rating: 4.5,
-        profileImage: "/images/artist1.jpg",
-        portfolio: ["/images/work1.jpg", "/images/work2.jpg"]
-      }
-    ];
-
-    const mockArtists = [
-      {
-        id: 5,
-        name: "João Tattoo",
-        city: "São Paulo",
-        rating: 4.5,
-        profileImage: "/images/artist1.jpg",
-        portfolio: ["/images/work1.jpg", "/images/work2.jpg"]
-      }
-    ];
+    {
+      id: 2,
+      name: "Artista 2",
+      city: "São Paulo",
+      clientsPerMonth: 15,
+      dailyLimit: 3,
+      image: "/imagens/tatuador1.jpg"
+    },
+    {
+      id: 3,
+      name: "Artista 3",
+      city: "São Paulo",
+      clientsPerMonth: 15,
+      dailyLimit: 3,
+      image: "/imagens/tatuador1.jpg"
+    },
+    {
+      id: 4,
+      name: "Artista 4",
+      city: "São Paulo",
+      clientsPerMonth: 15,
+      dailyLimit: 3,
+      image: "/imagens/tatuador1.jpg"
+    },
+    {
+      id: 5,
+      name: "Artista 5",
+      city: "São Paulo",
+      clientsPerMonth: 15,
+      dailyLimit: 3,
+      image: "/imagens/tatuador1.jpg"
+    },
+    {
+      id: 6,
+      name: "Artista 6",
+      city: "São Paulo",
+      clientsPerMonth: 15,
+      dailyLimit: 3,
+      image: "/imagens/tatuador1.jpg"
+    },
   ];
 
   return (
