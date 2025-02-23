@@ -11,7 +11,7 @@ const filterQueryParams = (query, ...allowedFields) => {
 
 exports.getArtists = async (req, res, next) => {
   try {
-    // 1. Filtragem
+    // 1. Filtragem dos parâmetros da query
     const filterParams = filterQueryParams(
       req.query,
       'estado',
@@ -22,16 +22,16 @@ exports.getArtists = async (req, res, next) => {
     
     const query = {};
     
-    // Localização
+    // Filtro por localização
     if (filterParams.estado) query['location.estado'] = filterParams.estado;
     if (filterParams.cidade) query['location.cidade'] = filterParams.cidade;
     
-    // Especialidades
+    // Filtro por especialidades (convertendo a string em array)
     if (filterParams.specialties) {
       query.specialties = { $in: filterParams.specialties.split(',') };
     }
     
-    // Classificação mínima
+    // Filtro por classificação mínima
     if (filterParams.minRating) {
       query.rating = { $gte: Number(filterParams.minRating) };
     }
@@ -41,7 +41,7 @@ exports.getArtists = async (req, res, next) => {
     const limit = parseInt(req.query.limit, 10) || 10;
     const skip = (page - 1) * limit;
 
-    // 3. Executar query
+    // 3. Execução da query com populações de dados relacionados
     const artists = await Artist.find(query)
       .populate({
         path: 'user',
@@ -109,7 +109,7 @@ exports.getArtistProfile = async (req, res, next) => {
 
 exports.updateArtistProfile = async (req, res, next) => {
   try {
-    // 1. Filtrar campos permitidos
+    // 1. Filtrar os campos permitidos para atualização
     const filteredBody = filterQueryParams(
       req.body,
       'specialties',
@@ -118,7 +118,7 @@ exports.updateArtistProfile = async (req, res, next) => {
       'portfolio'
     );
 
-    // 2. Atualizar com validação
+    // 2. Atualizar o perfil do artista com validação
     const artist = await Artist.findOneAndUpdate(
       { user: req.user.id },
       filteredBody,
