@@ -25,9 +25,9 @@ app.use(mongoSanitize());
 connectDB();
 
 // Rotas
-app.use('/api/auth', authRoutes);
-app.use('/api/artists', artistRoutes);
-app.use('/api/reviews', reviewRoutes);
+app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/artists', require('./routes/artistRoutes'));
+app.use('/api/reviews', require('./routes/reviewRoutes'));
 
 // Middleware de erros
 app.use(require('./middlewares/errorMiddleware'));
