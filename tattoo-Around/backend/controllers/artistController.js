@@ -148,3 +148,4 @@ exports.updateArtistProfile = async (req, res, next) => {
     next(err);
   }
 };
+
