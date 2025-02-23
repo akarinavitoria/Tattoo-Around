@@ -22,11 +22,6 @@ exports.protect = async (req, res, next) => {
   }
 };
 
-exports.authorize = (...roles) => {
-  return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
-      return next(new Error(`Acesso não permitido para ${req.user.role}`, 403));
-    }
-    next();
-  };
-};
+// middlewares/authMiddleware.js
+exports.protect = async (req, res, next) => { /* ... */ };
+exports.authorize = (...roles) => { /* ... */ };

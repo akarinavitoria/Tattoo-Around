@@ -20,21 +20,10 @@ exports.register = async (req, res, next) => {
     next(err);
   }
 };
+exports.register = async (req, res, next) => { /* ... */ };
 
-exports.login = async (req, res, next) => {
-  try {
-    const { email, password } = req.body;
-    
-    const user = await User.findOne({ email }).select('+password');
-    if (!user || !(await user.matchPassword(password))) {
-      return next(new Error('Credenciais inválidas', 401));
-    }
+exports.login = async (req, res, next) => { /* ... */ };
 
-    sendTokenResponse(user, 200, res);
-  } catch (err) {
-    next(err);
-  }
-};
 
 const sendTokenResponse = (user, statusCode, res) => {
   const token = jwt.sign({ id: user._id }, JWT_SECRET, {
