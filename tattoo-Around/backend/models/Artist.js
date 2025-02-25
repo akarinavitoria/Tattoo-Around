@@ -1,22 +1,29 @@
-// models/Artist.js
+// src/models/Artist.js
 const mongoose = require('mongoose');
 
+// 5.1 Definir o Schema
 const artistSchema = new mongoose.Schema({
-  // ... outros campos
+  name: {
+    type: String,
+    required: [true, 'O nome é obrigatório']
+  },
   location: {
     type: {
       type: String,
       default: 'Point',
       enum: ['Point']
     },
-    coordinates: [Number], // [longitude, latitude]
-    address: String,
-    estado: String,
-    cidade: String
+    coordinates: {
+      type: [Number], // [Longitude, Latitude]
+      required: true
+    },
+    city: String,
+    state: String
   }
 });
 
-// Criar índice geográfico 2dsphere
-artistSchema.index({ location: '2dsphere' }, { background: true });
+// 5.2 Criar índice geográfico
+artistSchema.index({ location: '2dsphere' }); // 👈 Índice para buscas por localização
 
+// Exportar o modelo
 module.exports = mongoose.model('Artist', artistSchema);
