@@ -1,7 +1,7 @@
 // src/seed.js
 require('dotenv').config();
 const mongoose = require('mongoose');
-const Artist = require('../models/Artist'); // Ajuste o caminho conforme sua estrutura
+const Artist = require('./models/Artist'); // Ajuste o caminho conforme sua estrutura
 
 const seedDatabase = async () => {
   try {
