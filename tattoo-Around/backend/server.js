@@ -7,48 +7,39 @@ const hpp = require('hpp');
 const mongoSanitize = require('express-mongo-sanitize');
 const connectDB = require('./config/db');
 
-// Inicializar aplicação Express
 const app = express();
 
-// Conectar ao banco de dados
+// Conectar ao banco
 connectDB();
 
-// Middlewares básicos
+// Middlewares
 app.use(express.json());
 app.use(cors());
-
-// Middlewares de segurança
 app.use(helmet());
 app.use(xss());
 app.use(hpp());
 app.use(mongoSanitize());
 
-// Importação de rotas
+// Rotas de teste (adicionar novas rotas aqui)
+app.get('/api/test', (req, res) => {
+  res.json({ 
+    status: 'success',
+    message: 'API está funcionando!',
+    version: '1.0.0'
+  });
+});
+
+// Outras rotas
 const authRoutes = require('./routes/authRoutes');
 const artistRoutes = require('./routes/artistRoutes');
-const reviewRoutes = require('./routes/reviewRoutes');
-
-// Rotas principais
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/artists', artistRoutes);
-app.use('/api/v1/reviews', reviewRoutes);
 
-// Middleware de tratamento de erros (DEVE ser o último)
+// Middleware de erros (SEMPRE o último)
 const errorHandler = require('./middlewares/errorMiddleware');
 app.use(errorHandler);
 
-// Configuração da porta e inicialização do servidor
 const PORT = process.env.PORT || 5000;
-const HOST = process.env.NODE_ENV === 'production' ? '0.0.0.0' : 'localhost';
-
-app.listen(PORT, HOST, () => {
-  console.log(`Servidor rodando em ${process.env.NODE_ENV || 'development'} na porta ${PORT}`);
-});
-
-app.get('/api/healthcheck', (req, res) => {
-  res.status(200).json({
-    status: 'success',
-    message: 'API operacional',
-    timestamp: new Date()
-  });
+app.listen(PORT, () => {
+  console.log(`✅ Servidor rodando na porta ${PORT}`);
 });
