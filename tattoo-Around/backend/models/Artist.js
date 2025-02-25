@@ -1,39 +1,8 @@
+// models/Artist.js
 const mongoose = require('mongoose');
 
 const artistSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'User',
-    required: true,
-    unique: true
-  },
-  specialties: [{
-    type: String,
-    enum: ['traditional', 'realism', 'watercolor', 'tribal', 'japanese', 'geometric']
-  }],
-  portfolio: [{
-    url: String,
-    description: String,
-    category: String,
-    uploadedAt: {
-      type: Date,
-      default: Date.now
-    }
-  }],
-  hourlyRate: {
-    type: Number,
-    min: 50
-  },
-  availability: {
-    type: Map,
-    of: [String] // Ex: { "seg": ["09:00", "10:00"], "ter": [...] }
-  },
-  rating: {
-    type: Number,
-    default: 0,
-    min: 0,
-    max: 5
-  },
+  // ... outros campos
   location: {
     type: {
       type: String,
@@ -47,7 +16,7 @@ const artistSchema = new mongoose.Schema({
   }
 });
 
-// Index para busca geográfica
-artistSchema.index({ location: '2dsphere' });
+// Criar índice geográfico 2dsphere
+artistSchema.index({ location: '2dsphere' }, { background: true });
 
 module.exports = mongoose.model('Artist', artistSchema);
