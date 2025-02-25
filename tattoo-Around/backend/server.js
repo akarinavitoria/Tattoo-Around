@@ -44,3 +44,11 @@ const HOST = process.env.NODE_ENV === 'production' ? '0.0.0.0' : 'localhost';
 app.listen(PORT, HOST, () => {
   console.log(`Servidor rodando em ${process.env.NODE_ENV || 'development'} na porta ${PORT}`);
 });
+
+app.get('/api/healthcheck', (req, res) => {
+  res.status(200).json({
+    status: 'success',
+    message: 'API operacional',
+    timestamp: new Date()
+  });
+});
