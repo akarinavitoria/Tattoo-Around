@@ -1,25 +1,33 @@
 // src/seed.js
+require('dotenv').config();
 const mongoose = require('mongoose');
-const Artist = require('./models/Artist');
+const Artist = require('../models/Artist'); // Ajuste o caminho conforme sua estrutura
 
 const seedDatabase = async () => {
-  await mongoose.connect(process.env.MONGO_URI);
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log('✅ Conectado ao MongoDB');
 
-  // 6.1 Limpar dados existentes (opcional)
-  await Artist.deleteMany();
+    // Limpar dados existentes
+    await Artist.deleteMany();
 
-  // 6.2 Inserir dados de teste
-  await Artist.create({
-    name: "Studio Tattoo SP",
-    location: {
-      coordinates: [-46.633308, -23.550520], // São Paulo
-      city: "São Paulo",
-      state: "SP"
-    }
-  });
+    // Inserir dados de teste
+    await Artist.create({
+      name: "Studio Tattoo SP",
+      location: {
+        type: "Point",
+        coordinates: [-46.633308, -23.550520],
+        city: "São Paulo",
+        state: "SP"
+      }
+    });
 
-  console.log('✅ Dados de teste inseridos!');
-  process.exit();
+    console.log('✅ Dados de teste inseridos com sucesso!');
+    process.exit();
+  } catch (err) {
+    console.error('❌ Erro:', err.message);
+    process.exit(1);
+  }
 };
 
 seedDatabase();
