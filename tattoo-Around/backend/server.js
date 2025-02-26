@@ -40,7 +40,6 @@ app.use('/api/v1/artists', artistRoutes);
 const errorHandler = require('./middlewares/errorMiddleware');
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT,'0.0.0.0', () => {
+app.listen(PORT, '0.0.0.0', () => { 
   console.log(`✅ Servidor rodando na porta ${PORT}`);
 });
