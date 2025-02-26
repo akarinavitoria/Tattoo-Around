@@ -1,1 +1,3 @@
 docker conection: 3bf5150500d3a0c6dce55eadc59a085c1ae950b4681d1d54ed7ebfcd2776bfed
+
+curl -v https://shiny-funicular-v6p7vpjwqj55hxx4v-5000.app.github.dev/api/healthcheck
