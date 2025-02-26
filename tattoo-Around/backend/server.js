@@ -9,7 +9,7 @@ const connectDB = require('./config/db');
 
 const app = express();
 
-// Conectar ao banco
+// Conectar ao banco de dados
 connectDB();
 
 // Middlewares
@@ -20,22 +20,23 @@ app.use(xss());
 app.use(hpp());
 app.use(mongoSanitize());
 
-// Rotas de teste (adicionar novas rotas aqui)
-app.get('/api/test', (req, res) => {
-  res.json({ 
+// Rota de healthcheck (adicione aqui)
+app.get('/api/healthcheck', (req, res) => {
+  res.status(200).json({
     status: 'success',
-    message: 'API está funcionando!',
+    message: 'API operacional',
+    timestamp: new Date(),
     version: '1.0.0'
   });
 });
 
-// Outras rotas
+// Importar e usar rotas
 const authRoutes = require('./routes/authRoutes');
 const artistRoutes = require('./routes/artistRoutes');
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/artists', artistRoutes);
 
-// Middleware de erros (SEMPRE o último)
+// Middleware de erros (DEVE ser o último)
 const errorHandler = require('./middlewares/errorMiddleware');
 app.use(errorHandler);
 
