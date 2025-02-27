@@ -5,8 +5,8 @@ const { protect, authorize } = require('../middlewares/authMiddleware');
 
 // Rotas para gerenciamento dos artistas
 router.get('/', artistController.getArtists);
-router.get('/profile', protect, authorize('artist'), artistController.getArtistProfile);
-router.put('/profile', protect, authorize('artist'), artistController.updateArtistProfile);
+router.get('/profile', artistController.getArtistProfile); // protect, authorize('artist')
+router.put('/profile', artistController.updateArtistProfile); // protect, authorize('artist')
 
 module.exports = router;
 
