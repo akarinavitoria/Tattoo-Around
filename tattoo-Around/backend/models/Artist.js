@@ -2,28 +2,47 @@
 const mongoose = require('mongoose');
 
 // 5.1 Definir o Schema
+const mongoose = require('mongoose');
+
 const artistSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+    unique: true  // Garante que cada usuário tenha apenas um perfil de artista (opcional)
+  },
   name: {
     type: String,
-    required: [true, 'O nome é obrigatório']
+    required: [true, 'Por favor, insira o nome do artista']
   },
+  specialties: [String],
+  hourlyRate: Number,
   location: {
     type: {
       type: String,
-      default: 'Point',
-      enum: ['Point']
+      enum: ['Point'],
+      required: true
     },
     coordinates: {
-      type: [Number], // [Longitude, Latitude]
+      type: [Number],
       required: true
     },
     city: String,
     state: String
-  }
+  },
+  rating: {
+    type: Number,
+    default: 0
+  },
+  reviews: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Review'
+  }]
+}, {
+  timestamps: true
 });
 
-// 5.2 Criar índice geográfico
-artistSchema.index({ location: '2dsphere' }); // 👈 Índice para buscas por localização
+// Cria índice geoespacial para location
+artistSchema.index({ location: '2dsphere' });
 
-// Exportar o modelo
 module.exports = mongoose.model('Artist', artistSchema);
