@@ -2,8 +2,6 @@
 const mongoose = require('mongoose');
 
 // 5.1 Definir o Schema
-const mongoose = require('mongoose');
-
 const artistSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
