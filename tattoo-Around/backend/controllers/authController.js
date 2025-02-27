@@ -20,10 +20,42 @@ exports.register = async (req, res, next) => {
     next(err);
   }
 };
-exports.register = async (req, res, next) => { /* ... */ };
 
-exports.login = async (req, res, next) => { /* ... */ };
+exports.login = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
 
+    // Verificar se email e senha foram informados
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: 'Por favor, forneça email e senha'
+      });
+    }
+
+    // Buscar o usuário e incluir a senha (se estiver selecionada como false no schema)
+    const user = await User.findOne({ email }).select('+password');
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: 'Credenciais inválidas'
+      });
+    }
+
+    // Validar a senha (assumindo que o método matchPassword está definido no model)
+    const isMatch = await user.matchPassword(password);
+    if (!isMatch) {
+      return res.status(401).json({
+        success: false,
+        message: 'Credenciais inválidas'
+      });
+    }
+
+    sendTokenResponse(user, 200, res);
+  } catch (err) {
+    next(err);
+  }
+};
 
 const sendTokenResponse = (user, statusCode, res) => {
   const token = jwt.sign({ id: user._id }, JWT_SECRET, {

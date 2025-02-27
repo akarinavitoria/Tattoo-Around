@@ -1,4 +1,3 @@
-// controllers/reviewController.js
 const Review = require('../models/Review');
 
 exports.createReview = async (req, res, next) => {
