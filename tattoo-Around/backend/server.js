@@ -40,6 +40,10 @@ connectDB().then(() => {
 
 
   // 5. Rotas
+  app.get('/', (req, res) => {
+    res.send('Bem-vindo(a) ao Tattoo Around API!');
+  });  
+
   const authRoutes = require('./routes/authRoutes');
   const artistRoutes = require('./routes/artistRoutes');
   const reviewRoutes = require('./routes/reviewRoutes');
