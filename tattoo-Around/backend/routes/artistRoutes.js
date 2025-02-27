@@ -5,7 +5,7 @@ const { protect, authorize } = require('../middlewares/authMiddleware');
 
 
 // Rota para criação do perfil do artista
-router.post('/', protect, authorize('artist'), artistController.createArtist); 
+router.post('/', protect, authorize('artist', 'user'), artistController.createArtist); 
 
 
 // Rotas para gerenciamento dos artistas
