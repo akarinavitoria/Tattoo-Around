@@ -37,11 +37,20 @@ const userSchema = new mongoose.Schema({
   }
 });
 
-// Hash da senha antes de salvar
+// Middleware para criptografar a senha antes de salvar
 userSchema.pre('save', async function(next) {
-  if (!this.isModified('password')) return next();
-  this.password = await bcrypt.hash(this.password, 12);
+  // Se a senha não foi modificada, segue para o próximo middleware
+  if (!this.isModified('password')) {
+    return next();
+  }
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
   next();
 });
+
+// Método para comparar a senha informada com a senha armazenada
+userSchema.methods.matchPassword = async function(enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
 
 module.exports = mongoose.model('User', userSchema);
