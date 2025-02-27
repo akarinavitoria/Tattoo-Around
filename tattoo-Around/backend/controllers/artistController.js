@@ -149,4 +149,31 @@ exports.updateArtistProfile = async (req, res, next) => {
   }
 };
 
+//Cria o perfil de artista para o usuário autenticado.
+
+exports.createArtist = async (req, res, next) => {
+ try {
+   // Opcional: verifique se o artista já existe para o usuário
+   let existingArtist = await Artist.findOne({ user: req.user.id });
+   if (existingArtist) {
+     return res.status(400).json({
+       success: false,
+       message: 'Perfil de artista já existe para este usuário'
+     });
+   }
+
+   // Cria o artista utilizando os dados do req.body e vinculando o usuário autenticado
+   const artist = await Artist.create({
+     user: req.user.id,
+     ...req.body
+   });
+
+   res.status(201).json({
+     success: true,
+     data: artist
+   });
+ } catch (err) {
+   next(err);
+ }
+};
 
