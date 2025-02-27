@@ -38,21 +38,14 @@ connectDB().then(() => {
     });
   });
 
-  app.use(cors({
-    origin: [
-      'https://shiny-funicular-v6p7vpjwqj55hxx4v-5000.app.github.dev', // Domínio do Codespaces
-      'http://localhost:3000'     // Frontend local (se aplicável)
-    ],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true
-  }));
-
 
   // 5. Rotas
   const authRoutes = require('./routes/authRoutes');
   const artistRoutes = require('./routes/artistRoutes');
+  const reviewRoutes = require('./routes/reviewRoutes');
   app.use('/api/v1/auth', authRoutes);
   app.use('/api/v1/artists', artistRoutes);
+  app.use('/api/v1/reviews', reviewRoutes);
 
   // 6. Error handler
   const errorHandler = require('./middlewares/errorMiddleware');
