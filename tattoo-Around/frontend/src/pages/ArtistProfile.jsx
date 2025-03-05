@@ -1,46 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import api from '../services/api';
-import RatingSystem from '../components/RatingSystem';
+import React, { useEffect, useState } from 'react';
+import api from '../services/Api';
 
-const ArtistProfile = () => {
-  const { id } = useParams();
+function ArtistProfile() {
   const [artist, setArtist] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchArtist = async () => {
+    const fetchArtistProfile = async () => {
       try {
-        const response = await api.get(`/artists/${id}`);
-        setArtist(response.data);
-      } catch (error) {
-        console.error('Error fetching artist:', error);
+        const { data } = await api.get('/api/v1/artists/profile');
+        setArtist(data.data); // Supondo que a resposta é { success: true, data: {...} }
+      } catch (err) {
+        console.error(err);
       }
-      setLoading(false);
     };
-    fetchArtist();
-  }, [id]);
 
-  if (loading) return <div>Carregando...</div>;
+    fetchArtistProfile();
+  }, []);
+
+  if (!artist) return <p>Carregando perfil...</p>;
 
   return (
-    <div className="artist-profile">
-      <div className="profile-header">
-        <h1>{artist.name}</h1>
-        <RatingSystem initialRating={artist.rating} />
-        <img src={artist.profileImage} alt={artist.name} />
-      </div>
-      
-      <div className="portfolio-section">
-        <h3>Portfólio</h3>
-        <div className="portfolio-grid">
-          {artist.portfolio.map((img, index) => (
-            <img key={index} src={img} alt={`Trabalho ${index + 1}`} />
-          ))}
-        </div>
-      </div>
+    <div>
+      <h2>Perfil do Artista</h2>
+      <p><strong>Nome:</strong> {artist.name}</p>
+      <p><strong>Especialidades:</strong> {artist.specialties?.join(', ')}</p>
+      {/* Renderize outros campos */}
     </div>
   );
-};
+}
 
 export default ArtistProfile;
