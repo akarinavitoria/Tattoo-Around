@@ -1,38 +1,44 @@
 import React, { createContext, useState, useEffect } from 'react';
+import api from '../services/Api';
 
 export const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null); // Armazena dados do usuário
   const [loading, setLoading] = useState(true);
 
-  // Verificar autenticação ao iniciar
   useEffect(() => {
-    const checkAuth = async () => {
-      const storedUser = localStorage.getItem('tattooUser');
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
-      }
-      setLoading(false);
-    };
-    checkAuth();
+    // Verifica se existe token armazenado
+    const token = localStorage.getItem('token');
+    if (token) {
+      // Opcional: poderíamos validar o token no backend ou buscar dados do user
+      // Por enquanto, apenas dizemos que está logado
+      api.defaults.headers.Authorization = `Bearer ${token}`;
+      // Se quiser, faça um request para /api/v1/auth/me e pegue dados do user
+      setUser({ token }); 
+    }
+    setLoading(false);
   }, []);
 
-  // Função de login
-  const login = (userData) => {
-    localStorage.setItem('tattooUser', JSON.stringify(userData));
-    setUser(userData);
+  const login = async (email, password) => {
+    // Chama o endpoint de login
+    const { data } = await api.post('/api/v1/auth/login', { email, password });
+    // Exemplo de retorno: { success: true, token, data: user }
+    localStorage.setItem('token', data.token);
+    api.defaults.headers.Authorization = `Bearer ${data.token}`;
+    setUser(data.data); // user completo retornado pelo backend
   };
 
-  // Função de logout
   const logout = () => {
-    localStorage.removeItem('tattooUser');
+    localStorage.removeItem('token');
     setUser(null);
+    // Remove o header Authorization
+    delete api.defaults.headers.Authorization;
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
-};
+}

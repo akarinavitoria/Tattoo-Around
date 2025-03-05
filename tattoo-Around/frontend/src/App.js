@@ -1,8 +1,18 @@
 import React from 'react';
+import { AuthProvider } from './context/AuthContext';
+import Routes from './Routes'
 import Header from './components/Header/Header';
 import Banner from './components/Banner/Banner';
 import TattooArtistCard from './components/TattooArtistCard/TattooArtistCard';
 import './App.css';
+
+function App() {
+  return (
+    <AuthProvider>
+      <Routes />
+    </AuthProvider>
+  );
+}
 
 const App = () => {
   const tattooArtists = [

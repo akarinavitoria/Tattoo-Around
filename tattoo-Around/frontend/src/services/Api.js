@@ -1,16 +1,19 @@
+// src/services/Api.js
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
+  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000',
 });
 
-// Interceptor para adicionar token automaticamente
+// Interceptador para inserir token em cada requisição
 api.interceptors.request.use((config) => {
-  const user = JSON.parse(localStorage.getItem('tattooUser'));
-  if (user?.token) {
-    config.headers.Authorization = `Bearer ${user.token}`;
+  const token = localStorage.getItem('token'); // ou sessionStorage, ou AuthContext
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
+}, (error) => {
+  return Promise.reject(error);
 });
 
 export default api;
