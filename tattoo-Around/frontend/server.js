@@ -6,7 +6,7 @@ const helmet = require('helmet');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const mongoSanitize = require('express-mongo-sanitize');
-const connectDB = require('./config/db');
+const connectDB = require('../backend/config/db');
 
 const app = express();
 
@@ -44,17 +44,17 @@ connectDB().then(() => {
     res.send('Bem-vindo(a) ao Tattoo Around API!');
   });  
 
-  const authRoutes = require('./routes/authRoutes');
-  const artistRoutes = require('./routes/artistRoutes');
-  const reviewRoutes = require('./routes/reviewRoutes');
-  const appointmentRoutes = require('./routes/appointmentRoutes');
+  const authRoutes = require('../backend/routes/authRoutes');
+  const artistRoutes = require('../backend/routes/artistRoutes');
+  const reviewRoutes = require('../backend/routes/reviewRoutes');
+  const appointmentRoutes = require('../backend/routes/appointmentRoutes');
   app.use('/api/v1/auth', authRoutes);
   app.use('/api/v1/artists', artistRoutes);
   app.use('/api/v1/reviews', reviewRoutes);
   app.use('/api/v1/appointments', appointmentRoutes);
 
   // 6. Error handler
-  const errorHandler = require('./middlewares/errorMiddleware');
+  const errorHandler = require('../backend/middlewares/errorMiddleware');
   app.use(errorHandler);
 
   // 7. Iniciar servidor APÓS conexão com o MongoDB
