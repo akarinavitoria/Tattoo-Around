@@ -1,26 +1,32 @@
-import React from 'react';
-import styles from './TattooArtistCard.module.css';
+import React, { useEffect, useState } from 'react';
+import api from '../services/Api';
 
-const TattooArtistCard = ({ artist }) => {
+function TattooArtistCard() {
+  const [artists, setArtists] = useState([]);
+
+  useEffect(() => {
+    const fetchArtists = async () => {
+      try {
+        const res = await api.get('/api/v1/artists');
+        setArtists(res.data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchArtists();
+  }, []);
+
   return (
-    <div className={styles.card}>
-      <img 
-        src={artist.image} 
-        alt="Foto do Tatuador" 
-        className={styles.profileImage}
-      />
-      <div className={styles.info}>
-        <h3>{artist.name}</h3>
-        <p>Cidade: {artist.city}</p>
-        <p>Clientes/mês: {artist.clientsPerMonth}</p>
-        <p>Limite diário: {artist.dailyLimit}</p>
-      </div>
-      <div className={styles.buttons}>
-        <button className={styles.portfolioButton}>Ver Portfólio</button>
-        <button className={styles.contactButton}>Entrar em Contato</button>
-      </div>
+    <div>
+      {artists.map((artist) => (
+        <div key={artist._id}>
+          <h3>{artist.name}</h3>
+          <p>Especialidades: {artist.specialties.join(', ')}</p>
+          {/* ... */}
+        </div>
+      ))}
     </div>
   );
-};
+}
 
 export default TattooArtistCard;
