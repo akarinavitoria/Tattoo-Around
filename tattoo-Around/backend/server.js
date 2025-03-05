@@ -47,9 +47,11 @@ connectDB().then(() => {
   const authRoutes = require('./routes/authRoutes');
   const artistRoutes = require('./routes/artistRoutes');
   const reviewRoutes = require('./routes/reviewRoutes');
+  const appointmentRoutes = require('./routes/appointmentRoutes');
   app.use('/api/v1/auth', authRoutes);
   app.use('/api/v1/artists', artistRoutes);
   app.use('/api/v1/reviews', reviewRoutes);
+  app.use('/api/v1/appointments', appointmentRoutes);
 
   // 6. Error handler
   const errorHandler = require('./middlewares/errorMiddleware');
