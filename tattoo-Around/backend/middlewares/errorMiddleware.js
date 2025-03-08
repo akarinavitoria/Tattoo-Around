@@ -1,5 +1,8 @@
+// No middleware de errorHandler (errorMiddleware.js)
+const logger = require('./logger');
+
 const errorHandler = (err, req, res, next) => {
-  console.error(err.stack);
+  logger.error(err.stack);
   res.status(500).json({
     success: false,
     error: err.message || 'Erro no servidor'
@@ -7,4 +10,3 @@ const errorHandler = (err, req, res, next) => {
 };
 
 module.exports = errorHandler;
-
