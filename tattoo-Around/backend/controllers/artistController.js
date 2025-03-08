@@ -177,3 +177,39 @@ exports.createArtist = async (req, res, next) => {
  }
 };
 
+// Adicione este método ao artistController
+exports.updatePortfolio = async (req, res, next) => {
+  try {
+    // Supondo que o portfólio é enviado no corpo da requisição (pode ser um array de URLs de imagens, por exemplo)
+    const { portfolio } = req.body;
+    if (!portfolio || !Array.isArray(portfolio)) {
+      return res.status(400).json({
+        success: false,
+        message: 'O portfólio deve ser um array de URLs.'
+      });
+    }
+
+    const artist = await Artist.findOneAndUpdate(
+      { user: req.user.id },
+      { portfolio },
+      { new: true, runValidators: true }
+    ).populate({
+      path: 'user',
+      select: 'name email'
+    });
+
+    if (!artist) {
+      return res.status(404).json({
+        success: false,
+        message: 'Perfil de artista não encontrado.'
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: artist
+    });
+  } catch (err) {
+    next(err);
+  }
+};
