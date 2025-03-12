@@ -11,9 +11,7 @@ function App() {
       <Routes />
     </AuthProvider>
   );
-}
 
-function App() {
   return (
     <div>
       <HeaderWrapper>
