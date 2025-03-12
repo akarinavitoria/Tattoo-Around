@@ -1,4 +1,5 @@
-require('dotenv').config();
+const connectDB = require('./config/db.js');
+const dotenv = require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -6,7 +7,7 @@ const helmet = require('helmet');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const mongoSanitize = require('express-mongo-sanitize');
-const connectDB = require('./config/db.js');
+
 
 const app = express();
 
