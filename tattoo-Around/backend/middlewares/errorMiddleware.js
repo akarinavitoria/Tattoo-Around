@@ -1,5 +1,5 @@
 // No middleware de errorHandler (errorMiddleware.js)
-const logger = require('./logger');
+const logger = require('../logger');
 
 const errorHandler = (err, req, res, next) => {
   logger.error(err.stack);
