@@ -8,7 +8,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const mongoSanitize = require('express-mongo-sanitize');
 
-
+dotenv.config();
 const app = express();
 
 // 1. Configurar variáveis antes de tudo
@@ -17,7 +17,8 @@ const HOST = process.env.HOST || '0.0.0.0';
 
 // 2. Conectar ao MongoDB ANTES de iniciar o servidor
 connectDB().then(() => {
-  // 3. Middlewares
+ 
+// 3. Middlewares
   app.use(express.json());
   app.use(cors({
     origin: process.env.CORS_ORIGIN || '*',
