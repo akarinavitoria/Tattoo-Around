@@ -6,7 +6,7 @@ const helmet = require('helmet');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const mongoSanitize = require('express-mongo-sanitize');
-const connectDB = require('./config/db');
+const connectDB = require('./config/db.js');
 
 const app = express();
 
