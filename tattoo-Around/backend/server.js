@@ -1,3 +1,6 @@
+const Sentry = require('@sentry/node');
+Sentry.init({ dsn: 'https://SEU_DSN@sentry.io/ID' });
+
 const express = require('express');
 const dotenv = require("dotenv");
 const connectDB = require("./config/db.js");
@@ -21,6 +24,8 @@ const HOST = process.env.HOST || '0.0.0.0';
 connectDB().then(() => {
  
 // 3. Middlewares
+  app.use(Sentry.Handlers.requestHandler());
+
   app.use(express.json());
   app.use(cors({
     origin: process.env.CORS_ORIGIN || '*',
@@ -60,7 +65,8 @@ connectDB().then(() => {
   // 6. Error handler
   const errorHandler = require('./middlewares/errorMiddleware');
   app.use(errorHandler);
-
+  app.use(Sentry.Handlers.errorHandler());
+  
   // 7. Iniciar servidor APÓS conexão com o MongoDB
   app.listen(PORT, HOST, () => {
     console.log(`\n✅ Servidor rodando em http://${HOST}:${PORT}`);
