@@ -11,7 +11,7 @@ router.post(
   createReview
 );
 
-app.use(rateLimit({
+router.use(rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutos
   max: 100, // 100 requisições por IP
   message: 'Muitas requisições deste IP, tente novamente mais tarde.'
