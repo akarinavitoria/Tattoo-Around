@@ -2,41 +2,9 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
-import Layout from '../components/Layout/Layout';
 import ArtistProfile from './pages/ArtistProfile';
 import ProtectedRoute from './ProtectedRoute';
 
-function AppRoutes() {
-  return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <Layout>
-            <Home />
-          </Layout>
-        }
-      />
-      <Route
-        path="/login"
-        element={
-          <Layout>
-            <Login />
-          </Layout>
-        }
-      />
-      <Route
-        path="/artist-profile"
-        element={
-          <Layout>
-            <ArtistProfile />
-          </Layout>
-        }
-      />
-      {/* Outras rotas */}
-    </Routes>
-  );
-}
 function AppRoutes() {
   return (
     <BrowserRouter>
