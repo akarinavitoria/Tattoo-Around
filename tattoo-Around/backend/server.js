@@ -9,6 +9,8 @@ const hpp = require('hpp');
 const mongoSanitize = require('express-mongo-sanitize');
 
 dotenv.config();
+console.log('JWT_SECRET:', process.env.JWT_SECRET);
+
 const app = express();
 
 // 1. Configurar variáveis antes de tudo
