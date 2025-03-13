@@ -6,17 +6,11 @@ import Routes from './Routes'; // Exemplo de arquivo de rotas
 
 function App() {
   return (
-    <div>
-      <Header />
-      <Routes />
-    </div>
-  );
-}
-
-function App() {
-  return (
     <AuthProvider>
-      <Routes />
+      <div>
+        <Header />
+        <Routes />
+      </div>
     </AuthProvider>
   );
 }
