@@ -1,7 +1,7 @@
 describe('Página inicial', () => {
     it('deve carregar corretamente', () => {
       cy.visit('/');
-      cy.contains('Bem-vindo ao Tattoo Around').should('be.visible');
+      cy.contains('Bem Vindo!! Aqui você encontra os melhores tatuadores perto de você').should('be.visible');
       // Altere conforme necessário
     });
   });
