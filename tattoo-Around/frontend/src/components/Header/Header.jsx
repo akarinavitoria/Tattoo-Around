@@ -9,7 +9,7 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
-        <Link to="/" className={styles.logo}>TattooAround</Link>
+        <Link to="/" className={styles.logo}>Tattoo Around</Link>
         
         <div className={styles.navLinks}>
           <Link to="/artists">Tatuadores</Link>
