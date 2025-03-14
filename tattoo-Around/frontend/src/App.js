@@ -1,20 +1,23 @@
-// src/App.js
-import React from 'react';
-import { HeaderWrapper, Title } from './components/Header/Header';
-import { AuthProvider } from './context/AuthContext';
-import Routes from './Routes'; // Exemplo de arquivo de rotas
+import { BrowserRouter } from "react-router-dom"
+import Header from "./components/Header"
+import { AuthProvider } from "./context/AuthContext"
+import AppRoutes from "./AppRoutes" // Ajustado para o nome correto do arquivo de rotas
 
 function App() {
   return (
     <AuthProvider>
-      <div>
-        <HeaderWrapper>
-          <Title>Tattoo Around</Title>
-        </HeaderWrapper>
-        <Routes />
-      </div>
+      <BrowserRouter>
+        <div className="app-container">
+          <Header />
+          <main>
+            <AppRoutes />
+          </main>
+        </div>
+      </BrowserRouter>
     </AuthProvider>
-  );
+  )
 }
 
-export default App;
+export default App
+
+
