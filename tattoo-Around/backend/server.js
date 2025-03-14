@@ -31,7 +31,7 @@ connectDB().then(() => {
   // 3. Middlewares
   app.use(express.json());
   app.use(cors({
-    origin: process.env.CORS_ORIGIN || '*',
+    origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH']
   }));
   app.use(helmet());
