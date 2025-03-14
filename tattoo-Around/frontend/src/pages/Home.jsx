@@ -2,12 +2,13 @@
 import React from 'react';
 
 const Home = () => {
-  return (
-    <div>
-      <h2>Bem-vindo ao Tattoo Around</h2>
-      <p>Esta é a página inicial.</p>
-    </div>
-  );
-};
-
+  function Home() {
+    return (
+      <div className="home-page">
+        <h1>Página Inicial</h1>
+        <p>Bem-vindo ao Tattoo-Around!</p>
+      </div>
+    )
+  }
+}
 export default Home;
