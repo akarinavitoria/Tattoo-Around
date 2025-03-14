@@ -1,6 +1,3 @@
-const Sentry = require('@sentry/node');
-Sentry.init({ dsn: 'https://SEU_DSN@sentry.io/ID' });
-
 const express = require('express');
 const dotenv = require("dotenv");
 const connectDB = require("./config/db.js");
@@ -10,11 +7,19 @@ const helmet = require('helmet');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const mongoSanitize = require('express-mongo-sanitize');
+const Sentry = require('@sentry/node');  // Importa o Sentry
 
 dotenv.config();
-console.log('JWT_SECRET:', process.env.JWT_SECRET);
+
+// Inicializa o Sentry
+Sentry.init({
+  dsn: process.env.SENTRY_DSN || 'https://ee214314b9934293c1ed7f0c27a994c8@o4508971980423168.ingest.de.sentry.io/4508972003622992',
+});
 
 const app = express();
+
+// Use o request handler do Sentry
+//app.use(Sentry.Handlers.requestHandler());
 
 // 1. Configurar variáveis antes de tudo
 const PORT = process.env.PORT || 5000;
@@ -22,10 +27,8 @@ const HOST = process.env.HOST || '0.0.0.0';
 
 // 2. Conectar ao MongoDB ANTES de iniciar o servidor
 connectDB().then(() => {
- 
-// 3. Middlewares
-  app.use(Sentry.Handlers.requestHandler());
 
+  // 3. Middlewares
   app.use(express.json());
   app.use(cors({
     origin: process.env.CORS_ORIGIN || '*',
@@ -47,7 +50,6 @@ connectDB().then(() => {
     });
   });
 
-
   // 5. Rotas
   app.get('/', (req, res) => {
     res.send('Bem-vindo(a) ao Tattoo Around API!');
@@ -65,8 +67,7 @@ connectDB().then(() => {
   // 6. Error handler
   const errorHandler = require('./middlewares/errorMiddleware');
   app.use(errorHandler);
-  app.use(Sentry.Handlers.errorHandler());
-  
+
   // 7. Iniciar servidor APÓS conexão com o MongoDB
   app.listen(PORT, HOST, () => {
     console.log(`\n✅ Servidor rodando em http://${HOST}:${PORT}`);
