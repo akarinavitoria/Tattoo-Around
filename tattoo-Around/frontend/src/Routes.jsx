@@ -7,20 +7,16 @@ import ProtectedRoute from './ProtectedRoute';
 
 function AppRoutes() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        
-        <Route 
-          path="/artist-profile" 
-          element={
-            <ProtectedRoute>
-              <ArtistProfile />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/artist-profile" element={<ArtistProfile />} />
+      {/* Outras rotas conforme necessário */}
+    </Routes>
+  );
+}
+
+export default AppRoutes;
   );
 }
 
