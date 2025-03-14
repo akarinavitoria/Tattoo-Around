@@ -1,6 +1,6 @@
 // src/Routes.jsx 
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import ArtistProfile from './pages/ArtistProfile';
 import ProtectedRoute from './ProtectedRoute';
