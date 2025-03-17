@@ -2,18 +2,18 @@ describe('Fluxo de Login', () => {
   it('deve logar com credenciais válidas', () => {
     cy.visit('/login'); // Acesse a página de login
 
-    // Preencha os campos com as credenciais esperadas
+    // Preencha os campos com as credenciais esperadas (conforme Login.jsx)
     cy.get('input[name="email"]', { timeout: 10000 }).type('teste@teste.com');
     cy.get('input[name="password"]').type('123456');
 
     // Clique no botão de envio do formulário
     cy.get('button[type="submit"]').click();
 
-    // Verifique se a URL inclui o caminho esperado após o login (/profile)
+    // Verifique se, após o login, a URL inclui "/profile"
     cy.url().should('include', '/profile');
 
-    // Verifique se o Header exibe a saudação (por exemplo, "Olá,")
-    cy.get('header').contains('Olá,');
+    // Opcional: Verifique se a página de perfil exibe algum dado do usuário
+    cy.contains('Usuário Teste').should('be.visible');
   });
 
   it('deve exibir mensagem de erro com credenciais inválidas', () => {
@@ -26,7 +26,8 @@ describe('Fluxo de Login', () => {
     // Clique no botão de envio do formulário
     cy.get('button[type="submit"]').click();
 
-    // Verifica se a mensagem de erro aparece
+    // Verifica se a mensagem de erro aparece na tela (conforme Login.jsx)
     cy.contains('Email ou senha inválidos').should('be.visible');
   });
 });
+
