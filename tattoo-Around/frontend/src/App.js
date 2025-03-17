@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
-import Header from "./components/Header/Header"; // Importa o Header como default
+import Header from "./components/Header/Header.jsx"; // Importa o Header como default
 import { AuthProvider } from "./context/AuthContext";
 import Routes from "./Routes";
 
@@ -20,6 +20,3 @@ function App() {
 }
 
 export default App;
-
-
-
