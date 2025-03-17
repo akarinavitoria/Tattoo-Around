@@ -31,6 +31,7 @@ const Login = () => {
           profilePic: "/placeholder.svg?height=200&width=200",
         };
 
+        localStorage.setItem("user", JSON.stringify(userData)); // ✅ Salvar no localStorage
         login(userData);
         navigate("/profile");
       } else {

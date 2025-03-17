@@ -1,35 +1,44 @@
-describe('Fluxo de Login', () => {
-  it('deve logar com credenciais válidas', () => {
-    cy.visit('/login'); // Acesse a página de login
-
-    // Preencha os campos com as credenciais esperadas (de acordo com Login.jsx)
-    cy.get('input[name="email"]', { timeout: 10000 }).type('teste@teste.com');
-    cy.get('input[name="password"]').type('123456');
-
-    // Clique no botão de envio do formulário
-    cy.get('button[type="submit"]').click();
-
-    // Aguarde até que a URL contenha '/profile'
-    cy.url().should('include', '/profile');
-
-    // Aguarde um pouco para garantir que a página de perfil seja renderizada completamente
-    cy.wait(2000);
-
-    // Verifica se a página de perfil exibe o nome "Usuário Teste"
-    cy.contains('Usuário Teste').should('be.visible');
+describe("Fluxo de Login", () => {
+  beforeEach(() => {
+    cy.visit("/login");
   });
 
-  it('deve exibir mensagem de erro com credenciais inválidas', () => {
-    cy.visit('/login');
+  it("deve logar com credenciais válidas", () => {
+    cy.get('[data-testid="login-email"]').type("teste@teste.com");
+    cy.get('[data-testid="login-password"]').type("123456");
+    cy.get('[data-testid="login-submit"]').click();
 
-    // Use credenciais inválidas
-    cy.get('input[name="email"]', { timeout: 10000 }).type('invalido@example.com');
-    cy.get('input[name="password"]').type('senhaErrada');
+    // Espera explícita para garantir que o login seja processado
+    cy.url().should("include", "/profile");
 
-    // Clique no botão de envio do formulário
-    cy.get('button[type="submit"]').click();
+    // Aguarda a exibição do nome do usuário
+    cy.contains("Usuário Teste", { timeout: 10000 }).should("be.visible");
+  });
 
-    // Verifica se a mensagem de erro aparece na tela
-    cy.contains('Email ou senha inválidos').should('be.visible');
+  it("deve exibir mensagem de erro com credenciais inválidas", () => {
+    cy.get('[data-testid="login-email"]').type("email@errado.com");
+    cy.get('[data-testid="login-password"]').type("senhaerrada");
+    cy.get('[data-testid="login-submit"]').click();
+
+    cy.get('[data-testid="login-error"]')
+      .should("be.visible")
+      .and("contain", "Email ou senha inválidos");
+  });
+});
+describe("Fluxo de Login", () => {
+  beforeEach(() => {
+    cy.visit("/login");
+  });
+
+  it("deve logar com credenciais válidas", () => {
+    cy.get('[name="email"]').type("teste@teste.com");
+    cy.get('[name="password"]').type("123456");
+    cy.get("button[type='submit']").click();
+
+    // Aguarda o redirecionamento para o perfil
+    cy.url().should("include", "/profile");
+
+    // Aguarda a exibição do nome do usuário no perfil
+    cy.contains("Usuário Teste", { timeout: 10000 }).should("be.visible");
   });
 });
