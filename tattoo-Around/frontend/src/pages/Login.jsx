@@ -1,27 +1,27 @@
 "use client"
 
-import { useState, useContext } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import { AuthContext } from "../context/AuthContext"
-import "./Auth.css"
+import { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import "./Auth.css";
 
 const Login = () => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [rememberMe, setRememberMe] = useState(false)
-  const [error, setError] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const { login } = useContext(AuthContext)
-  const navigate = useNavigate()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setError("")
-    setIsLoading(true)
+    e.preventDefault();
+    setError("");
+    setIsLoading(true);
 
     try {
       // Simulando uma chamada de API
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       if (email === "teste@teste.com" && password === "123456") {
         const userData = {
@@ -29,20 +29,20 @@ const Login = () => {
           name: "Usuário Teste",
           email: "teste@teste.com",
           profilePic: "/placeholder.svg?height=200&width=200",
-        }
+        };
 
-        login(userData)
-        navigate("/profile")
+        login(userData);
+        navigate("/profile");
       } else {
-        setError("Email ou senha inválidos")
+        setError("Email ou senha inválidos");
       }
     } catch (err) {
-      setError("Ocorreu um erro ao fazer login. Tente novamente.")
-      console.error(err)
+      setError("Ocorreu um erro ao fazer login. Tente novamente.");
+      console.error(err);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="auth-page">
@@ -58,9 +58,11 @@ const Login = () => {
           <form onSubmit={handleSubmit} className="auth-form">
             <div className="form-group">
               <label htmlFor="email">Email</label>
+              {/* Ajuste principal: adicione o name="email" */}
               <input
                 type="email"
                 id="email"
+                name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="seu@email.com"
@@ -70,9 +72,11 @@ const Login = () => {
 
             <div className="form-group">
               <label htmlFor="password">Senha</label>
+              {/* Ajuste principal: adicione o name="password" */}
               <input
                 type="password"
                 id="password"
+                name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Sua senha"
@@ -95,7 +99,11 @@ const Login = () => {
               </Link>
             </div>
 
-            <button type="submit" className={`auth-button ${isLoading ? "loading" : ""}`} disabled={isLoading}>
+            <button
+              type="submit"
+              className={`auth-button ${isLoading ? "loading" : ""}`}
+              disabled={isLoading}
+            >
               {isLoading ? "Entrando..." : "Entrar"}
             </button>
           </form>
@@ -155,8 +163,7 @@ const Login = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
-
+export default Login;
