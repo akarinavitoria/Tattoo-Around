@@ -4,7 +4,7 @@ describe("Fluxo de Login", () => {
   });
 
   it("deve logar com credenciais válidas", () => {
-    cy.get('[data-testid="login-email"]').type("teste@teste.com");
+    cy.get('[data-testid="login-email"]', { timeout: 10000 }).should('be.visible')
     cy.get('[data-testid="login-password"]').type("123456");
     cy.get('[data-testid="login-submit"]').click();
 

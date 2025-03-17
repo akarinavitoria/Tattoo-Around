@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -20,7 +20,6 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      // Simulando uma chamada de API
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       if (email === "teste@teste.com" && password === "123456") {
@@ -31,7 +30,7 @@ const Login = () => {
           profilePic: "/placeholder.svg?height=200&width=200",
         };
 
-        localStorage.setItem("user", JSON.stringify(userData)); // ✅ Salvar no localStorage
+        localStorage.setItem("user", JSON.stringify(userData));
         login(userData);
         navigate("/profile");
       } else {
@@ -46,7 +45,7 @@ const Login = () => {
   };
 
   return (
-    <div className="auth-page">
+    <div className="auth-page" data-testid="page-loaded">
       <div className="auth-container">
         <div className="auth-card">
           <div className="auth-header">
@@ -54,12 +53,11 @@ const Login = () => {
             <p>Entre na sua conta para continuar</p>
           </div>
 
-          {error && <div className="auth-error">{error}</div>}
+          {error && <div className="auth-error" data-testid="login-error">{error}</div>}
 
           <form onSubmit={handleSubmit} className="auth-form">
             <div className="form-group">
               <label htmlFor="email">Email</label>
-              {/* Ajuste principal: adicione o name="email" */}
               <input
                 type="email"
                 id="email"
@@ -68,12 +66,12 @@ const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="seu@email.com"
                 required
+                data-testid="login-email"
               />
             </div>
 
             <div className="form-group">
               <label htmlFor="password">Senha</label>
-              {/* Ajuste principal: adicione o name="password" */}
               <input
                 type="password"
                 id="password"
@@ -82,6 +80,7 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Sua senha"
                 required
+                data-testid="login-password"
               />
             </div>
 
@@ -92,6 +91,7 @@ const Login = () => {
                   id="rememberMe"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
+                  data-testid="login-remember"
                 />
                 <label htmlFor="rememberMe">Lembrar de mim</label>
               </div>
@@ -104,6 +104,7 @@ const Login = () => {
               type="submit"
               className={`auth-button ${isLoading ? "loading" : ""}`}
               disabled={isLoading}
+              data-testid="login-submit"
             >
               {isLoading ? "Entrando..." : "Entrar"}
             </button>
@@ -114,36 +115,10 @@ const Login = () => {
           </div>
 
           <div className="social-login">
-            <button className="social-button google">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M20.283 10.356h-8.327v3.451h4.792c-.446 2.193-2.313 3.453-4.792 3.453a5.27 5.27 0 0 1-5.279-5.28 5.27 5.27 0 0 1 5.279-5.279c1.259 0 2.397.447 3.29 1.178l2.6-2.599c-1.584-1.381-3.615-2.233-5.89-2.233a8.908 8.908 0 0 0-8.934 8.934 8.907 8.907 0 0 0 8.934 8.934c4.467 0 8.529-3.249 8.529-8.934 0-.528-.081-1.097-.202-1.625z"></path>
-              </svg>
+            <button className="social-button google" data-testid="login-google">
               Continuar com Google
             </button>
-            <button className="social-button facebook">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-              </svg>
+            <button className="social-button facebook" data-testid="login-facebook">
               Continuar com Facebook
             </button>
           </div>
@@ -168,3 +143,4 @@ const Login = () => {
 };
 
 export default Login;
+
