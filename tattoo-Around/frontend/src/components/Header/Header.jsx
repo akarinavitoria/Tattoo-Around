@@ -1,17 +1,17 @@
 "use client"
 
-import { useContext, useState } from "react"
-import { Link } from "react-router-dom"
-import { AuthContext } from "../../context/AuthContext"
-import "./Header.css"
+import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import "./Header.css";
 
 const Header = () => {
-  const { user, logout } = useContext(AuthContext)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { user, logout } = useContext(AuthContext);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen)
-  }
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
 
   return (
     <header className="header">
@@ -20,7 +20,7 @@ const Header = () => {
           Tattoo Around
         </Link>
 
-        <button className="mobile-menu-button" onClick={toggleMobileMenu}>
+        <button className="mobile-menu-button" onClick={toggleMobileMenu} aria-label="Abrir menu">
           <span className="bar"></span>
           <span className="bar"></span>
           <span className="bar"></span>
@@ -44,29 +44,30 @@ const Header = () => {
 
           <div className="auth-section">
             {user ? (
-              <>
-                <div className="user-profile">
-                  <img
-                    src={user.profilePic || "https://v0.blob.com/placeholder.svg?height=40&width=40"}
-                    alt={user.name}
-                    className="profile-pic"
-                  />
-                  <div className="user-dropdown">
-                    <Link to="/profile" className="dropdown-item">
-                      Meu Perfil
-                    </Link>
-                    <Link to="/appointments" className="dropdown-item">
-                      Agendamentos
-                    </Link>
-                    <Link to="/favorites" className="dropdown-item">
-                      Favoritos
-                    </Link>
-                    <button onClick={logout} className="dropdown-item logout">
-                      Sair
-                    </button>
-                  </div>
+              <div className="user-profile">
+                <img
+                  src={
+                    user.profilePic ||
+                    "https://v0.blob.com/placeholder.svg?height=40&width=40"
+                  }
+                  alt={user.name || "Foto de perfil"}
+                  className="profile-pic"
+                />
+                <div className="user-dropdown">
+                  <Link to="/profile" className="dropdown-item">
+                    Meu Perfil
+                  </Link>
+                  <Link to="/appointments" className="dropdown-item">
+                    Agendamentos
+                  </Link>
+                  <Link to="/favorites" className="dropdown-item">
+                    Favoritos
+                  </Link>
+                  <button onClick={logout} className="dropdown-item logout">
+                    Sair
+                  </button>
                 </div>
-              </>
+              </div>
             ) : (
               <>
                 <Link to="/login" className="auth-link">
@@ -81,9 +82,10 @@ const Header = () => {
         </nav>
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
+
 
 
