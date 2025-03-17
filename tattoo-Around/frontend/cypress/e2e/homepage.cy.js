@@ -4,7 +4,7 @@ describe('Página Inicial', () => {
       cy.visit('/');
   
       // Verifica se o elemento com a classe "logo" contém o texto "Tattoo Around"
-      cy.get('a.logo', { timeout: 15000 }).should('contain.text', 'Tattoo Around');
+      cy.get('logo', { timeout: 15000 }).should('contain.text', 'Tattoo Around');
     });
   });
   
