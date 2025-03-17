@@ -22,7 +22,7 @@ const Login = () => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      if (email === "teste@teste.com" && password === "123456") {
+      if (email === "teste@teste.com" && password === "Mustang75!") {
         const userData = {
           id: 1,
           name: "Usuário Teste",
