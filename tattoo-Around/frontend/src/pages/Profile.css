@@ -1,0 +1,681 @@
+.profile-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 3rem;
+  }
+  
+  /* Header do perfil */
+  .profile-header {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+  
+  .profile-cover {
+    height: 250px;
+    overflow: hidden;
+    border-radius: 0 0 20px 20px;
+  }
+  
+  .profile-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .profile-info-container {
+    display: flex;
+    align-items: flex-end;
+    padding: 0 2rem;
+    margin-top: -80px;
+    position: relative;
+  }
+  
+  .profile-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    z-index: 2;
+  }
+  
+  .profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .profile-details {
+    margin-left: 2rem;
+    padding-top: 80px;
+    flex: 1;
+  }
+  
+  .profile-details h1 {
+    margin: 0 0 0.5rem 0;
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  .profile-email {
+    color: #666;
+    margin-bottom: 1rem;
+  }
+  
+  .profile-stats {
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .stat-label {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .profile-actions {
+    display: flex;
+    align-items: center;
+    padding-top: 80px;
+  }
+  
+  /* Conteúdo do perfil */
+  .profile-content {
+    padding: 0 2rem;
+  }
+  
+  .profile-tabs {
+    display: flex;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 2rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  
+  .profile-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .tab-button {
+    padding: 1rem 1.5rem;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    white-space: nowrap;
+    position: relative;
+  }
+  
+  .tab-button::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background-color: #0066ff;
+    transition: width 0.3s ease;
+  }
+  
+  .tab-button:hover {
+    color: #333;
+  }
+  
+  .tab-button.active {
+    color: #0066ff;
+  }
+  
+  .tab-button.active::after {
+    width: 100%;
+  }
+  
+  /* Conteúdo das abas */
+  .tab-content {
+    min-height: 400px;
+  }
+  
+  /* Aba de informações */
+  .info-tab {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  
+  .info-card {
+    background: white;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  }
+  
+  .info-card h3 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-size: 1.3rem;
+  }
+  
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .info-item {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .info-label {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.3rem;
+  }
+  
+  .info-value {
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .preferences {
+    margin-bottom: 2rem;
+  }
+  
+  .preference-item {
+    margin-bottom: 1.5rem;
+  }
+  
+  .preference-label {
+    display: block;
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+  }
+  
+  .preference-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .tag {
+    background: #f5f5f5;
+    padding: 0.5rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+  }
+  
+  .add-tag {
+    background: none;
+    border: 1px dashed #ccc;
+    padding: 0.5rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    color: #666;
+    cursor: pointer;
+  }
+  
+  .add-tag:hover {
+    border-color: #0066ff;
+    color: #0066ff;
+  }
+  
+  .toggle-switches {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .toggle-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+  }
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+  
+  input:checked + .slider {
+    background-color: #0066ff;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(26px);
+  }
+  
+  /* Aba de favoritos */
+  .favorites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  
+  .favorite-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+  }
+  
+  .favorite-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .favorite-image {
+    height: 200px;
+    overflow: hidden;
+  }
+  
+  .favorite-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .favorite-card:hover .favorite-image img {
+    transform: scale(1.05);
+  }
+  
+  .favorite-info {
+    padding: 1.5rem;
+  }
+  
+  .favorite-info h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.2rem;
+  }
+  
+  .specialty {
+    color: #0066ff;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  
+  .rating {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .stars {
+    color: #ffb400;
+    margin-right: 0.5rem;
+  }
+  
+  .rating-value {
+    font-weight: 600;
+  }
+  
+  .favorite-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .btn-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #eee;
+    background: none;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-icon:hover {
+    background-color: #f5f5f5;
+    color: #ff3b30;
+  }
+  
+  /* Aba de agendamentos */
+  .appointments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .appointment-card {
+    display: flex;
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .appointment-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+  }
+  
+  .appointment-card.confirmed::before {
+    background-color: #34c759;
+  }
+  
+  .appointment-card.pending::before {
+    background-color: #ff9500;
+  }
+  
+  .appointment-card.cancelled::before {
+    background-color: #ff3b30;
+  }
+  
+  .appointment-status {
+    width: 120px;
+    flex-shrink: 0;
+  }
+  
+  .status {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+  
+  .status.confirmed {
+    background-color: rgba(52, 199, 89, 0.1);
+    color: #34c759;
+  }
+  
+  .status.pending {
+    background-color: rgba(255, 149, 0, 0.1);
+    color: #ff9500;
+  }
+  
+  .status.cancelled {
+    background-color: rgba(255, 59, 48, 0.1);
+    color: #ff3b30;
+  }
+  
+  .appointment-details {
+    flex: 1;
+  }
+  
+  .appointment-details h4 {
+    margin: 0 0 0.3rem 0;
+    font-size: 1.1rem;
+  }
+  
+  .artist {
+    color: #666;
+    margin-bottom: 0.5rem;
+  }
+  
+  .appointment-date {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #666;
+    font-size: 0.9rem;
+  }
+  
+  .appointment-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  
+  /* Aba de histórico */
+  .history-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+  
+  .history-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  }
+  
+  .history-image {
+    height: 180px;
+    overflow: hidden;
+  }
+  
+  .history-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .history-info {
+    padding: 1.5rem;
+  }
+  
+  .history-info h4 {
+    margin: 0 0 0.3rem 0;
+    font-size: 1.1rem;
+  }
+  
+  .artist {
+    color: #666;
+    margin-bottom: 0.3rem;
+  }
+  
+  .date {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Estado vazio */
+  .empty-state {
+    text-align: center;
+    padding: 3rem;
+    background: #f9f9f9;
+    border-radius: 10px;
+  }
+  
+  .empty-state p {
+    margin-bottom: 1.5rem;
+    color: #666;
+  }
+  
+  /* Estado não logado */
+  .not-logged-in {
+    text-align: center;
+    padding: 5rem 2rem;
+  }
+  
+  .not-logged-in h2 {
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  .not-logged-in p {
+    margin-bottom: 2rem;
+    color: #666;
+  }
+  
+  .auth-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  /* Botões */
+  .btn-primary {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background: #0066ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    text-align: center;
+  }
+  
+  .btn-primary:hover {
+    background: #0055cc;
+  }
+  
+  .btn-outline {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background: none;
+    color: #0066ff;
+    border: 1px solid #0066ff;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    text-align: center;
+  }
+  
+  .btn-outline:hover {
+    background: rgba(0, 102, 255, 0.05);
+  }
+  
+  .btn-text {
+    background: none;
+    border: none;
+    color: #666;
+    padding: 0.5rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .btn-text:hover {
+    color: #ff3b30;
+  }
+  
+  /* Responsividade */
+  @media (max-width: 992px) {
+    .info-tab {
+      grid-template-columns: 1fr;
+    }
+  
+    .profile-info-container {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .profile-details {
+      margin-left: 0;
+      padding-top: 1.5rem;
+    }
+  
+    .profile-stats {
+      justify-content: center;
+    }
+  
+    .profile-actions {
+      padding-top: 1.5rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .profile-content {
+      padding: 0 1rem;
+    }
+  
+    .favorites-grid,
+    .history-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .appointment-card {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  
+    .appointment-status {
+      width: 100%;
+    }
+  
+    .appointment-actions {
+      flex-direction: row;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .profile-cover {
+      height: 150px;
+    }
+  
+    .profile-avatar {
+      width: 120px;
+      height: 120px;
+    }
+  
+    .profile-details h1 {
+      font-size: 1.5rem;
+    }
+  
+    .info-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  
