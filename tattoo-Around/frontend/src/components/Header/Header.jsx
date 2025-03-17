@@ -1,41 +1,89 @@
 "use client"
 
-import { useContext } from "react"
-import { Link } from "react-router-dom" // Importação correta do Link
+import { useContext, useState } from "react"
+import { Link } from "react-router-dom"
 import { AuthContext } from "../../context/AuthContext"
-import styles from "./Header.module.css"
+import "./Header.css"
 
 const Header = () => {
   const { user, logout } = useContext(AuthContext)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen)
+  }
 
   return (
-    <header className={styles.header}>
-      <nav className={styles.nav}>
-        <Link to="/" className={styles.logo}>
+    <header className="header">
+      <div className="header-container">
+        <Link to="/" className="logo">
           Tattoo Around
         </Link>
 
-        <div className={styles.navLinks}>
-          <Link to="/artists">Tatuadores</Link>
-          <Link to="/styles">Estilos</Link>
-        </div>
+        <button className="mobile-menu-button" onClick={toggleMobileMenu}>
+          <span className="bar"></span>
+          <span className="bar"></span>
+          <span className="bar"></span>
+        </button>
 
-        <div className={styles.authSection}>
-          {user ? (
-            <>
-              <span>Olá, {user.name}</span>
-              <button onClick={logout}>Sair</button>
-            </>
-          ) : (
-            <>
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Cadastro</Link>
-            </>
-          )}
-        </div>
-      </nav>
+        <nav className={`nav-menu ${mobileMenuOpen ? "active" : ""}`}>
+          <div className="nav-links">
+            <Link to="/artists" className="nav-link">
+              Tatuadores
+            </Link>
+            <Link to="/styles" className="nav-link">
+              Estilos
+            </Link>
+            <Link to="/gallery" className="nav-link">
+              Galeria
+            </Link>
+            <Link to="/about" className="nav-link">
+              Sobre
+            </Link>
+          </div>
+
+          <div className="auth-section">
+            {user ? (
+              <>
+                <div className="user-profile">
+                  <img
+                    src={user.profilePic || "https://v0.blob.com/placeholder.svg?height=40&width=40"}
+                    alt={user.name}
+                    className="profile-pic"
+                  />
+                  <div className="user-dropdown">
+                    <Link to="/profile" className="dropdown-item">
+                      Meu Perfil
+                    </Link>
+                    <Link to="/appointments" className="dropdown-item">
+                      Agendamentos
+                    </Link>
+                    <Link to="/favorites" className="dropdown-item">
+                      Favoritos
+                    </Link>
+                    <button onClick={logout} className="dropdown-item logout">
+                      Sair
+                    </button>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="auth-link">
+                  Entrar
+                </Link>
+                <Link to="/signup" className="auth-button">
+                  Cadastre-se
+                </Link>
+              </>
+            )}
+          </div>
+        </nav>
+      </div>
     </header>
   )
 }
 
 export default Header
+
+
