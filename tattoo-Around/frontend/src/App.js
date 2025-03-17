@@ -1,16 +1,18 @@
 import { BrowserRouter } from "react-router-dom"
-import Header from "./components/Header"
+import { HeaderWrapper, Title } from "./components/Header/Header" // Importação correta dos componentes nomeados
 import { AuthProvider } from "./context/AuthContext"
-import AppRoutes from "./AppRoutes" // Ajustado para o nome correto do arquivo de rotas
+import Routes from "./Routes" // Ajuste para o nome correto do seu arquivo de rotas
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <div className="app-container">
-          <Header />
+          <HeaderWrapper>
+            <Title>Tattoo Around</Title>
+          </HeaderWrapper>
           <main>
-            <AppRoutes />
+            <Routes />
           </main>
         </div>
       </BrowserRouter>
@@ -19,5 +21,4 @@ function App() {
 }
 
 export default App
-
 

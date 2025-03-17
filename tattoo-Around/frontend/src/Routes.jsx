@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import ArtistProfile from './pages/ArtistProfile';
-import ProtectedRouteWrapper from "./ProtectedRouteWrapper"
+import ProtectedRoute from './ProtectedRoute';
 
 function AppRoutes() {
   return (
@@ -12,11 +12,9 @@ function AppRoutes() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/artist-profile" element={<ArtistProfile />} />
+      <Route path="/Protected-Route" element={<ProtectedRoute />} />
       {/* Outras rotas conforme necessário */}
-
-      <Route path="*" element={<div>Página não encontrada</div>} />
     </Routes>
-
   );
 }
 
