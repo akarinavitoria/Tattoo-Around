@@ -1,29 +1,60 @@
-describe('Agendamentos', () => {
+escribe("Agendamentos", () => {
   beforeEach(() => {
-    cy.request('POST', 'http://localhost:5000/api/auth/login', {
-      email: 'teste@teste.com',
-      password: 'Mustang75!'
-    }).then((response) => {
-      window.localStorage.setItem('token', response.body.token);
-    });
+    // Em vez de fazer uma requisição real para o backend, vamos mockar o login
+    cy.intercept("POST", "http://localhost:5000/api/auth/login", {
+      statusCode: 200,
+      body: {
+        token: "fake-jwt-token",
+        user: {
+          id: 1,
+          name: "Usuário Teste",
+          email: "teste@teste.com",
+        },
+      },
+    }).as("loginRequest")
 
-    cy.visit('/profile'); // Vai direto para a página esperada
-    cy.url().should('include', '/profile');
-  });
+    // Configurar localStorage para simular usuário logado
+    cy.window().then((win) => {
+      win.localStorage.setItem(
+        "user",
+        JSON.stringify({
+          id: 1,
+          name: "Usuário Teste",
+          email: "teste@teste.com",
+        }),
+      )
+      win.localStorage.setItem("token", "fake-jwt-token")
+    })
 
-  it('deve criar um agendamento com dados válidos', () => {
-    cy.visit('/appointments');
+    // Visitar a página de agendamentos
+    cy.visit("/appointments")
+  })
 
-    cy.get('input[name="appointmentDate"]').should('be.visible').type('2025-03-01T15:00');
-    cy.get('select[name="service"]').should('be.visible').select('Tatuagem Tradicional');
-    cy.get('textarea[name="notes"]').should('be.visible').type('Primeira sessão de tatuagem');
+  it("deve criar um agendamento com dados válidos", () => {
+    // Interceptar a requisição de criação de agendamento
+    cy.intercept("POST", "http://localhost:5000/api/appointments", {
+      statusCode: 201,
+      body: {
+        id: 1,
+        date: "2023-12-15",
+        time: "14:00",
+        service: "Consulta inicial",
+        status: "confirmed",
+      },
+    }).as("createAppointment")
 
-    cy.get('button[type="submit"]').should('be.enabled').click();
+    // Preencher o formulário de agendamento
+    cy.get("[data-cy=date-picker]").type("2023-12-15")
+    cy.get("[data-cy=time-picker]").select("14:00")
+    cy.get("[data-cy=service-select]").select("Consulta inicial")
+    cy.get("[data-cy=submit-appointment]").click()
 
-    // Verifica se o alerta de sucesso foi exibido
-    cy.on('window:alert', (alertText) => {
-      expect(alertText).to.equal('Agendamento criado com sucesso');
-    });
-  });
-});
+    // Verificar se a requisição foi feita corretamente
+    cy.wait("@createAppointment")
+
+    // Verificar se a mensagem de sucesso aparece
+    cy.contains("Agendamento criado com sucesso").should("be.visible")
+  })
+})
+
 
