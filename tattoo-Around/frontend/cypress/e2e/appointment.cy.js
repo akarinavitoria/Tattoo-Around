@@ -2,7 +2,7 @@ describe('Agendamentos', () => {
   beforeEach(() => {
     cy.request('POST', 'http://localhost:5000/api/auth/login', {
       email: 'teste@teste.com',
-      password: '123456'
+      password: 'Mustang75!'
     }).then((response) => {
       window.localStorage.setItem('token', response.body.token);
     });
