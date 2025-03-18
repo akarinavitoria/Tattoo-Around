@@ -3,7 +3,7 @@ describe("Fluxo de Login", () => {
     cy.visit("/login");
 
     cy.get('[data-testid="login-email"]').type("teste@teste.com");
-    cy.get('[data-testid="login-password"]').type("123456");
+    cy.get('[data-testid="login-password"]').type("Mustang75!");
     cy.get('[data-testid="login-submit"]').click();
 
     // Aguarde até que a URL contenha "/profile"

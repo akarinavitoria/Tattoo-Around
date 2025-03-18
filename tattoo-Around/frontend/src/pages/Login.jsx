@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,13 +6,24 @@ import { AuthContext } from "../context/AuthContext";
 import "./Auth.css";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    rememberMe: false,
+  });
+
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,17 +31,25 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulação de delay
 
-      if (email === "teste@teste.com" && password === "Mustang75!") {
+      const validUser = {
+        email: "teste@teste.com",
+        password: "Mustang75!",
+      };
+
+      if (formData.email === validUser.email && formData.password === validUser.password) {
         const userData = {
           id: 1,
           name: "Usuário Teste",
-          email: "teste@teste.com",
+          email: validUser.email,
           profilePic: "/placeholder.svg?height=200&width=200",
         };
 
-        localStorage.setItem("user", JSON.stringify(userData));
+        if (formData.rememberMe) {
+          localStorage.setItem("user", JSON.stringify(userData));
+        }
+
         login(userData);
         navigate("/profile");
       } else {
@@ -62,8 +81,8 @@ const Login = () => {
                 type="email"
                 id="email"
                 name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={formData.email}
+                onChange={handleChange}
                 placeholder="seu@email.com"
                 required
                 data-testid="login-email"
@@ -76,8 +95,8 @@ const Login = () => {
                 type="password"
                 id="password"
                 name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={formData.password}
+                onChange={handleChange}
                 placeholder="Sua senha"
                 required
                 data-testid="login-password"
@@ -89,8 +108,9 @@ const Login = () => {
                 <input
                   type="checkbox"
                   id="rememberMe"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
+                  name="rememberMe"
+                  checked={formData.rememberMe}
+                  onChange={handleChange}
                   data-testid="login-remember"
                 />
                 <label htmlFor="rememberMe">Lembrar de mim</label>
@@ -115,10 +135,10 @@ const Login = () => {
           </div>
 
           <div className="social-login">
-            <button className="social-button google" data-testid="login-google">
+            <button className="social-button google" data-testid="login-google" aria-label="Entrar com Google">
               Continuar com Google
             </button>
-            <button className="social-button facebook" data-testid="login-facebook">
+            <button className="social-button facebook" data-testid="login-facebook" aria-label="Entrar com Facebook">
               Continuar com Facebook
             </button>
           </div>
@@ -143,4 +163,5 @@ const Login = () => {
 };
 
 export default Login;
+
 
