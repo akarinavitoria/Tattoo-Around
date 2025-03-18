@@ -1,4 +1,4 @@
-escribe("Agendamentos", () => {
+describe("Agendamentos", () => {
   beforeEach(() => {
     // Em vez de fazer uma requisição real para o backend, vamos mockar o login
     cy.intercept("POST", "http://localhost:5000/api/auth/login", {
