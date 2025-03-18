@@ -32,7 +32,7 @@ describe("Signup Page", () => {
       cy.get("button[type=submit]").should("be.enabled").click();
       
       // Aguarda redirecionamento para a página de perfil
-      cy.wait(); 
+      cy.wait(1000); 
       cy.url().should("include", "/profile");
     });
   });
