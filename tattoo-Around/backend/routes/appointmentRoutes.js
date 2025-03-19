@@ -24,7 +24,7 @@ router.post(
 );
 
 // ✅ Listar todos os agendamentos (corrigido para `/appointments`)
-router.get("/appointments", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const appointments = await Appointment.find(); // Busca todos os agendamentos
     return res.status(200).json(appointments);
