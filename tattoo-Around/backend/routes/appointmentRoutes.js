@@ -1,10 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const { createAppointment, cancelAppointment } = require("../controllers/appointmentController");
 const Appointment = require("../models/Appointments");
-const {
-  createAppointment,
-  cancelAppointment,
-} = require("../controllers/appointmentController");
 const { body, validationResult } = require("express-validator");
 
 // ✅ Criar um agendamento
