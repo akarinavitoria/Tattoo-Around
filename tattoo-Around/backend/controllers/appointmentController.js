@@ -5,13 +5,16 @@ exports.createAppointment = async (req, res, next) => {
   try {
     const { artistId, appointmentDate, service, notes } = req.body;
 
-    // Criando um novo agendamento com os dados recebidos
+    const userId = "65fd2b1c4e9dce001c2a9a72";
+
     const newAppointment = new Appointment({
+      user: userId,  // Adicionando o usuário
       artistId,
-      appointmentDate,
+      date: appointmentDate,  // Corrigindo o nome do campo para `date`
       service,
       notes
     });
+
 
     // Salvando no banco
     await newAppointment.save();

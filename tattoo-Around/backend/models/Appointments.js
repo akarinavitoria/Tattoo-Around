@@ -1,10 +1,33 @@
 const mongoose = require("mongoose");
 
 const AppointmentSchema = new mongoose.Schema({
-  date: { type: Date, required: true },
-  service: { type: String, required: true },
-  notes: { type: String },
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // Relacionamento com usuário
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: [true, "O usuário é obrigatório"]
+  },
+  artistId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Artist",
+    required: [true, "O ID do tatuador é obrigatório"]
+  },
+  date: {
+    type: Date,
+    required: [true, "A data do agendamento é obrigatória"]
+  },
+  service: {
+    type: String,
+    required: [true, "O serviço é obrigatório"]
+  },
+  notes: {
+    type: String
+  },
+  status: {
+    type: String,
+    enum: ["scheduled", "cancelled", "completed"],
+    default: "scheduled"
+  }
 });
 
-module.exports = mongoose.model("Appointments", AppointmentSchema);
+module.exports = mongoose.model("Appointment", AppointmentSchema);
+
