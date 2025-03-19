@@ -1,13 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { protect } = require("../middlewares/authMiddleware");
+const Appointment = require("../models/Appointments");
 const { createAppointment, cancelAppointment } = require("../controllers/appointmentController");
-const Appointment = require("../models/Appointment"); // Corrigido o nome do modelo
 const { body, validationResult } = require("express-validator");
 
-// ✅ Criar um agendamento com validação
+// Criar um agendamento
 router.post(
-  "/appointments",
+  "/",
   [
     body("artistId").notEmpty().withMessage("artistId é obrigatório"),
     body("appointmentDate").isISO8601().withMessage("appointmentDate deve ser uma data válida"),
@@ -23,17 +22,30 @@ router.post(
   createAppointment
 );
 
-// ✅ Listar todos os agendamentos (corrigido para `/appointments`)
+// Listar todos os agendamentos
 router.get("/", async (req, res) => {
   try {
-    const appointments = await Appointment.find(); // Busca todos os agendamentos
+    const appointments = await Appointment.find();
     return res.status(200).json(appointments);
   } catch (error) {
     return res.status(500).json({ message: "Erro ao buscar agendamentos", error });
   }
 });
 
-// ✅ Cancelar um agendamento
-router.put("/appointments/:appointmentId/cancel", protect, cancelAppointment);
+// Buscar um agendamento pelo ID
+router.get("/:appointmentId", async (req, res) => {
+  try {
+    const appointment = await Appointment.findById(req.params.appointmentId);
+    if (!appointment) {
+      return res.status(404).json({ message: "Agendamento não encontrado" });
+    }
+    return res.status(200).json(appointment);
+  } catch (error) {
+    return res.status(500).json({ message: "Erro ao buscar o agendamento", error });
+  }
+});
+
+// Cancelar um agendamento
+router.put("/:appointmentId/cancel", cancelAppointment);
 
 module.exports = router;
