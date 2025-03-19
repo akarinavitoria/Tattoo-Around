@@ -1,24 +1,37 @@
 const Appointment = require("../models/Appointments");
 
-// ✅ Criar um agendamento (simulação de resposta)
+// ✅ Criar um novo agendamento no banco de dados
 exports.createAppointment = async (req, res, next) => {
   try {
-    const appointment = req.body; // Apenas retorna os dados para testes
+    const { artistId, appointmentDate, service, notes } = req.body;
+
+    // Criando um novo agendamento com os dados recebidos
+    const newAppointment = new Appointment({
+      artistId,
+      appointmentDate,
+      service,
+      notes
+    });
+
+    // Salvando no banco
+    await newAppointment.save();
+
     return res.status(201).json({
       success: true,
-      data: appointment
+      message: "Agendamento criado com sucesso!",
+      data: newAppointment
     });
   } catch (err) {
     next(err);
   }
 };
 
-// ✅ Cancelar um agendamento
+// ✅ Cancelar um agendamento pelo ID
 exports.cancelAppointment = async (req, res, next) => {
   try {
     const { appointmentId } = req.params;
 
-    // Verifica se o agendamento existe
+    // Busca o agendamento no banco
     const appointment = await Appointment.findById(appointmentId);
     if (!appointment) {
       return res.status(404).json({
@@ -40,3 +53,4 @@ exports.cancelAppointment = async (req, res, next) => {
     next(err);
   }
 };
+
