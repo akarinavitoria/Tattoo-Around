@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { protect, authorize } = require('../middlewares/authMiddleware'); // ✅ Corrigido
 const { createAppointment } = require('../controllers/appointmentController');
-const Appointment = require("../models/Appointment");
+const Appointment = require("../models/Appointments");
 const { cancelAppointment } = require('../controllers/appointmentController');
 const { body, validationResult } = require('express-validator');
 
