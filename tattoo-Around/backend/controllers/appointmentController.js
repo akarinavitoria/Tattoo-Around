@@ -1,37 +1,42 @@
+const Appointment = require("../models/Appointments");
+
+// ✅ Criar um agendamento (simulação de resposta)
 exports.createAppointment = async (req, res, next) => {
-    try {
-      // Para fins de teste, simplesmente retorne os dados recebidos
-      const appointment = req.body;
-      return res.status(201).json({
-        success: true,
-        data: appointment
+  try {
+    const appointment = req.body; // Apenas retorna os dados para testes
+    return res.status(201).json({
+      success: true,
+      data: appointment
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ✅ Cancelar um agendamento
+exports.cancelAppointment = async (req, res, next) => {
+  try {
+    const { appointmentId } = req.params;
+
+    // Verifica se o agendamento existe
+    const appointment = await Appointment.findById(appointmentId);
+    if (!appointment) {
+      return res.status(404).json({
+        success: false,
+        message: "Agendamento não encontrado."
       });
-    } catch (err) {
-      next(err);
     }
-  };
-  
-  exports.cancelAppointment = async (req, res, next) => {
-    try {
-      const { appointmentId } = req.params;
-      const appointment = await Appointment.findOneAndUpdate(
-        { _id: appointmentId, user: req.user.id },
-        { status: 'cancelled' },
-        { new: true }
-      );
-  
-      if (!appointment) {
-        return res.status(404).json({
-          success: false,
-          message: 'Agendamento não encontrado ou não autorizado.'
-        });
-      }
-  
-      res.status(200).json({
-        success: true,
-        data: appointment
-      });
-    } catch (err) {
-      next(err);
-    }
-  };
+
+    // Atualiza o status para "Cancelado"
+    appointment.status = "Cancelado";
+    await appointment.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Agendamento cancelado com sucesso",
+      data: appointment
+    });
+  } catch (err) {
+    next(err);
+  }
+};
