@@ -32,6 +32,18 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Atualizar um agendamento pelo ID
+router.put("/:appointmentId", async (req, res) => {
+  try {
+    const { appointmentDate, service, notes } = req.body;
+
+    // Encontrar o agendamento pelo ID e atualizar
+    const updatedAppointment = await Appointment.findByIdAndUpdate(
+      req.params.appointmentId,
+      { appointmentDate, service, notes },
+      { new: true, runValidators: true } // Retorna o objeto atualizado
+    );
+
 // Buscar um agendamento pelo ID
 router.get("/:appointmentId", async (req, res) => {
   try {
