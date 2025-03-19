@@ -99,7 +99,11 @@ const Signup = () => {
             <p>Junte-se à comunidade Tattoo Around</p>
           </div>
 
-          {errors.form && <div className="auth-error" data-testid="signup-error">{errors.form}</div>}
+          {errors.form && (
+            <div className="auth-error" data-testid="signup-error">
+              {errors.form}
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="auth-form">
             <div className="form-group">
@@ -215,3 +219,5 @@ const Signup = () => {
 };
 
 export default Signup;
+
+
