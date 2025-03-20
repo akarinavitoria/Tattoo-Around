@@ -33,15 +33,27 @@ exports.createAppointment = async (req, res, next) => {
 exports.cancelAppointment = async (req, res, next) => {
   try {
     const { appointmentId } = req.params;
+    const appointment = await Appointment.findByIdAndUpdate(
+      appointmentId,
+      { status: "cancelled" }, // 🚀 Corrigido aqui
+      { new: true }
+    );
 
-    // Busca o agendamento no banco
-    const appointment = await Appointment.findById(appointmentId);
     if (!appointment) {
       return res.status(404).json({
         success: false,
-        message: "Agendamento não encontrado."
+        message: "Agendamento não encontrado ou não autorizado."
       });
     }
+
+    res.status(200).json({
+      success: true,
+      data: appointment
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 
     // Atualiza o status para "Cancelado"
     appointment.status = "Cancelado";
