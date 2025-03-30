@@ -5,16 +5,16 @@ exports.createAppointment = async (req, res, next) => {
   try {
     const { artistId, appointmentDate, service, notes } = req.body;
 
+    // Simulação de usuário autenticado; futuramente substitua pelo ID do usuário logado
     const userId = "65fd2b1c4e9dce001c2a9a72";
 
     const newAppointment = new Appointment({
-      user: userId,  // Adicionando o usuário
+      user: userId,
       artistId,
-      date: appointmentDate,  // Corrigindo o nome do campo para `date`
+      date: appointmentDate, // Note: o campo é "date" no modelo
       service,
       notes
     });
-
 
     // Salvando no banco
     await newAppointment.save();
@@ -33,11 +33,9 @@ exports.createAppointment = async (req, res, next) => {
 exports.cancelAppointment = async (req, res, next) => {
   try {
     const { appointmentId } = req.params;
-    const appointment = await Appointment.findByIdAndUpdate(
-      appointmentId,
-      { status: "cancelled" }, // 🚀 Corrigido aqui
-      { new: true }
-    );
+
+    // Procura o agendamento pelo ID
+    const appointment = await Appointment.findById(appointmentId);
 
     if (!appointment) {
       return res.status(404).json({
@@ -46,17 +44,8 @@ exports.cancelAppointment = async (req, res, next) => {
       });
     }
 
-    res.status(200).json({
-      success: true,
-      data: appointment
-    });
-  } catch (err) {
-    next(err);
-  }
-};
-
-    // Atualiza o status para "Cancelado"
-    appointment.status = "Cancelado";
+    // Atualiza o status para "cancelled" (usando valor válido para o enum)
+    appointment.status = "cancelled";
     await appointment.save();
 
     return res.status(200).json({
