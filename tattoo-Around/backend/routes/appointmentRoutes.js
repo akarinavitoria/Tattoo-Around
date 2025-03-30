@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { listAppointments } = require("../controllers/appointmentController");
 const { createAppointment, cancelAppointment } = require("../controllers/appointmentController");
 const Appointment = require("../models/Appointments");
 const { body, validationResult } = require("express-validator");
@@ -74,6 +75,9 @@ router.put("/:appointmentId", async (req, res) => {
       .json({ message: "Erro ao atualizar o agendamento", error });
   }
 });
+
+// ✅ Listar agendamentos com filtros opcionais
+router.get("/", listAppointments);
 
 // ✅ Cancelar um agendamento
 router.put("/:appointmentId/cancel", cancelAppointment);
