@@ -3,6 +3,7 @@ const router = express.Router();
 const { listAppointments } = require("../controllers/appointmentController");
 const { updateAppointment } = require("../controllers/appointmentController");
 const { createAppointment, cancelAppointment } = require("../controllers/appointmentController");
+const { getAppointmentsByUser, getAppointmentsByArtist } = require("../controllers/appointmentController");
 const Appointment = require("../models/Appointments");
 const { body, validationResult } = require("express-validator");
 
@@ -25,6 +26,12 @@ router.post(
   },
   createAppointment
 );
+
+// ✅ Listar agendamentos de um usuário específico
+router.get("/user/:userId", getAppointmentsByUser);
+
+// ✅ Listar agendamentos de um artista específico
+router.get("/artist/:artistId", getAppointmentsByArtist);
 
 // ✅ Listar todos os agendamentos
 router.get("/", async (req, res) => {

@@ -29,6 +29,38 @@ exports.createAppointment = async (req, res, next) => {
   }
 };
 
+// ✅ Listar agendamentos de um usuário específico
+exports.getAppointmentsByUser = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const appointments = await Appointment.find({ user: userId });
+
+    return res.status(200).json({
+      success: true,
+      count: appointments.length,
+      data: appointments,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ✅ Listar agendamentos de um artista específico
+exports.getAppointmentsByArtist = async (req, res, next) => {
+  try {
+    const { artistId } = req.params;
+    const appointments = await Appointment.find({ artistId });
+
+    return res.status(200).json({
+      success: true,
+      count: appointments.length,
+      data: appointments,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 // ✅ Listar agendamentos com filtros opcionais
 exports.listAppointments = async (req, res, next) => {
   try {
