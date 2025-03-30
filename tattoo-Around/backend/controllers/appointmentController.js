@@ -29,6 +29,43 @@ exports.createAppointment = async (req, res, next) => {
   }
 };
 
+// ✅ Listar agendamentos com filtros opcionais
+exports.listAppointments = async (req, res, next) => {
+  try {
+    // Pegamos os filtros opcionais da URL
+    const { userId, artistId, status } = req.query;
+
+    // Criamos um objeto de filtro vazio
+    let filter = {};
+
+    // Se o usuário enviou um userId, filtramos pelos agendamentos desse usuário
+    if (userId) {
+      filter.user = userId;
+    }
+
+    // Se o usuário enviou um artistId, filtramos pelos agendamentos desse tatuador
+    if (artistId) {
+      filter.artistId = artistId;
+    }
+
+    // Se o usuário enviou um status, filtramos pelo status correspondente
+    if (status) {
+      filter.status = status;
+    }
+
+    // Buscamos os agendamentos no banco de dados com os filtros aplicados
+    const appointments = await Appointment.find(filter);
+
+    return res.status(200).json({
+      success: true,
+      count: appointments.length,
+      data: appointments
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 // ✅ Cancelar um agendamento pelo ID
 exports.cancelAppointment = async (req, res, next) => {
   try {
