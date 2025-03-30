@@ -66,6 +66,36 @@ exports.listAppointments = async (req, res, next) => {
   }
 };
 
+// ✅ Atualizar um agendamento existente
+exports.updateAppointment = async (req, res, next) => {
+  try {
+    const { appointmentId } = req.params;
+    const { appointmentDate, service, notes } = req.body;
+
+    // Encontramos e atualizamos o agendamento no banco de dados
+    const appointment = await Appointment.findByIdAndUpdate(
+      appointmentId,
+      { date: appointmentDate, service, notes },
+      { new: true, runValidators: true } // Retorna o documento atualizado
+    );
+
+    if (!appointment) {
+      return res.status(404).json({
+        success: false,
+        message: "Agendamento não encontrado.",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Agendamento atualizado com sucesso!",
+      data: appointment,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 // ✅ Cancelar um agendamento pelo ID
 exports.cancelAppointment = async (req, res, next) => {
   try {
