@@ -58,3 +58,4 @@ router.put("/:appointmentId", updateAppointment);
 router.put("/:appointmentId/cancel", cancelAppointment);
 
 module.exports = router;
+
