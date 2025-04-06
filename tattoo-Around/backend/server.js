@@ -54,7 +54,7 @@ connectDB().then(() => {
   app.get('/', (req, res) => {
     res.send('Bem-vindo(a) ao Tattoo Around API!');
   });  
-  const validateObjectId = require('./middleware/validateObjectId');
+
   const authRoutes = require('./routes/authRoutes');
   const artistRoutes = require('./routes/artistRoutes');
   const reviewRoutes = require('./routes/reviewRoutes');
@@ -65,15 +65,6 @@ connectDB().then(() => {
   app.use('/api/v1/reviews', reviewRoutes);
   app.use('/api/appointments', appointmentRoutes);
 
-  router.get("/user/:userId", 
-    validateObjectId('userId'),
-    getAppointmentsByUser
-  );
-
-  router.get("/artist/:artistId",
-    validateObjectId('artistId'),
-    getAppointmentsByArtist
-  );
 
   // 6. Error handler
   const errorHandler = require('./middlewares/errorMiddleware');
