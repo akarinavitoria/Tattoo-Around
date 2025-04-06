@@ -1,23 +1,28 @@
 const express = require("express");
 const router = express.Router();
+const { body, validationResult } = require("express-validator");
+
 const {
-  listAppointments,
   createAppointment,
-  cancelAppointment,
-  updateAppointment,
   getAppointmentsByUser,
   getAppointmentsByArtist,
+  listAppointments,
+  updateAppointment,
+  cancelAppointment
 } = require("../controllers/appointmentController");
+
 const Appointment = require("../models/Appointments");
-const { body, validationResult } = require("express-validator");
+const validateObjectId = require("../middlewares/validateObjectId");
 
 // ✅ Criar um agendamento
 router.post(
   "/",
   [
     body("artistId").notEmpty().withMessage("artistId é obrigatório"),
-    body("appointmentDate").isISO8601().withMessage("appointmentDate deve ser uma data válida"),
-    body("service").notEmpty().withMessage("service é obrigatório"),
+    body("appointmentDate")
+      .isISO8601()
+      .withMessage("appointmentDate deve ser uma data válida"),
+    body("service").notEmpty().withMessage("service é obrigatório")
   ],
   (req, res, next) => {
     const errors = validationResult(req);
@@ -30,16 +35,16 @@ router.post(
 );
 
 // ✅ Listar agendamentos de um usuário específico
-router.get("/user/:userId", getAppointmentsByUser);
+router.get("/user/:userId", validateObjectId("userId"), getAppointmentsByUser);
 
 // ✅ Listar agendamentos de um artista específico
-router.get("/artist/:artistId", getAppointmentsByArtist);
+router.get("/artist/:artistId", validateObjectId("artistId"), getAppointmentsByArtist);
 
-// ✅ Listar todos os agendamentos com filtros opcionais
+// ✅ Listagem geral com filtros opcionais
 router.get("/", listAppointments);
 
 // ✅ Buscar um agendamento pelo ID
-router.get("/:appointmentId", async (req, res) => {
+router.get("/:appointmentId", validateObjectId("appointmentId"), async (req, res) => {
   try {
     const appointment = await Appointment.findById(req.params.appointmentId);
     if (!appointment) {
@@ -47,15 +52,16 @@ router.get("/:appointmentId", async (req, res) => {
     }
     return res.status(200).json(appointment);
   } catch (error) {
-    return res.status(500).json({ message: "Erro ao buscar o agendamento", error });
+    return res
+      .status(500)
+      .json({ message: "Erro ao buscar o agendamento", error });
   }
 });
 
-// ✅ Atualizar um agendamento pelo ID
-router.put("/:appointmentId", updateAppointment);
+// ✅ Atualizar um agendamento
+router.put("/:appointmentId", validateObjectId("appointmentId"), updateAppointment);
 
 // ✅ Cancelar um agendamento
-router.put("/:appointmentId/cancel", cancelAppointment);
+router.put("/:appointmentId/cancel", validateObjectId("appointmentId"), cancelAppointment);
 
 module.exports = router;
-
