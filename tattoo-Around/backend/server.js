@@ -1,3 +1,4 @@
+const validateObjectId = require('./middleware/validateObjectId');
 const express = require('express');
 const dotenv = require("dotenv");
 const connectDB = require("./config/db.js");
@@ -59,10 +60,21 @@ connectDB().then(() => {
   const artistRoutes = require('./routes/artistRoutes');
   const reviewRoutes = require('./routes/reviewRoutes');
   const appointmentRoutes = require('./routes/appointmentRoutes');
+
   app.use('/api/v1/auth', authRoutes);
   app.use('/api/v1/artists', artistRoutes);
   app.use('/api/v1/reviews', reviewRoutes);
   app.use('/api/appointments', appointmentRoutes);
+
+  router.get("/user/:userId", 
+    validateObjectId('userId'),
+    getAppointmentsByUser
+  );
+
+  router.get("/artist/:artistId",
+    validateObjectId('artistId'),
+    getAppointmentsByArtist
+  );
 
   // 6. Error handler
   const errorHandler = require('./middlewares/errorMiddleware');

@@ -1,159 +1,224 @@
+const mongoose = require("mongoose");
 const Appointment = require("../models/Appointments");
 
-// ✅ Criar um novo agendamento no banco de dados
+// ✅ Criar um novo agendamento
 exports.createAppointment = async (req, res, next) => {
   try {
     const { artistId, appointmentDate, service, notes } = req.body;
+    
+    // Validação básica de dados
+    if (!mongoose.Types.ObjectId.isValid(artistId)) {
+      return res.status(400).json({
+        success: false,
+        message: "ID de artista inválido"
+      });
+    }
 
-    // Simulação de usuário autenticado; futuramente substitua pelo ID do usuário logado
+    // Simulação de usuário autenticado (substituir por middleware real posteriormente)
     const userId = "65fd2b1c4e9dce001c2a9a72";
 
     const newAppointment = new Appointment({
       user: userId,
       artistId,
-      date: appointmentDate, // Note: o campo é "date" no modelo
+      date: appointmentDate,
       service,
-      notes
+      notes,
+      status: "confirmed" // Valor padrão inicial
     });
 
-    // Salvando no banco
     await newAppointment.save();
 
-    return res.status(201).json({
+    // Popula dados básicos para a resposta
+    const populatedAppointment = await Appointment.findById(newAppointment._id)
+      .populate('artistId', 'name specialization')
+      .populate('user', 'name email');
+
+    res.status(201).json({
       success: true,
-      message: "Agendamento criado com sucesso!",
-      data: newAppointment
+      message: "Agendamento criado!",
+      data: populatedAppointment
     });
+
   } catch (err) {
     next(err);
   }
 };
 
-// ✅ Listar agendamentos de um usuário específico
+// ✅ Listar agendamentos por usuário (ATUALIZADO)
 exports.getAppointmentsByUser = async (req, res, next) => {
   try {
     const { userId } = req.params;
-    const appointments = await Appointment.find({ user: userId });
 
-    return res.status(200).json({
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({
+        success: false,
+        message: "Formato de ID inválido"
+      });
+    }
+
+    const appointments = await Appointment.find({ user: userId })
+      .populate('artistId', 'name avatarUrl specialization contact')
+      .sort({ date: -1 }) // Mais recentes primeiro
+      .lean();
+
+    res.status(200).json({
       success: true,
       count: appointments.length,
-      data: appointments,
+      data: appointments.map(appt => ({
+        ...appt,
+        artist: appt.artistId,  // Campo renomeado
+        artistId: undefined     // Remove referência original
+      }))
     });
+
   } catch (err) {
     next(err);
   }
 };
 
-// ✅ Listar agendamentos de um artista específico
+// ✅ Listar agendamentos por artista (ATUALIZADO)
 exports.getAppointmentsByArtist = async (req, res, next) => {
   try {
     const { artistId } = req.params;
-    const appointments = await Appointment.find({ artistId });
 
-    return res.status(200).json({
+    if (!mongoose.Types.ObjectId.isValid(artistId)) {
+      return res.status(400).json({
+        success: false,
+        message: "Formato de ID inválido"
+      });
+    }
+
+    const appointments = await Appointment.find({ artistId })
+      .populate('user', 'name email phone avatarUrl')
+      .sort({ date: 1 }) // Mais próximos primeiro
+      .lean();
+
+    res.status(200).json({
       success: true,
       count: appointments.length,
-      data: appointments,
+      data: appointments.map(appt => ({
+        ...appt,
+        client: appt.user,  // Nomeclatura mais clara
+        user: undefined
+      }))
     });
+
   } catch (err) {
     next(err);
   }
 };
 
-// ✅ Listar agendamentos com filtros opcionais
+// ✅ Listagem geral com filtros (ATUALIZADA)
 exports.listAppointments = async (req, res, next) => {
   try {
-    // Pegamos os filtros opcionais da URL
-    const { userId, artistId, status } = req.query;
+    const { userId, artistId, status, fromDate, toDate } = req.query;
+    const filter = {};
 
-    // Criamos um objeto de filtro vazio
-    let filter = {};
+    if (userId) filter.user = userId;
+    if (artistId) filter.artistId = artistId;
+    if (status) filter.status = status;
 
-    // Se o usuário enviou um userId, filtramos pelos agendamentos desse usuário
-    if (userId) {
-      filter.user = userId;
+    // Filtro por período
+    if (fromDate || toDate) {
+      filter.date = {};
+      if (fromDate) filter.date.$gte = new Date(fromDate);
+      if (toDate) filter.date.$lte = new Date(toDate);
     }
 
-    // Se o usuário enviou um artistId, filtramos pelos agendamentos desse tatuador
-    if (artistId) {
-      filter.artistId = artistId;
-    }
+    const appointments = await Appointment.find(filter)
+      .populate('user', 'name')
+      .populate('artistId', 'name')
+      .sort({ date: -1 })
+      .lean();
 
-    // Se o usuário enviou um status, filtramos pelo status correspondente
-    if (status) {
-      filter.status = status;
-    }
-
-    // Buscamos os agendamentos no banco de dados com os filtros aplicados
-    const appointments = await Appointment.find(filter);
-
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
       count: appointments.length,
       data: appointments
     });
+
   } catch (err) {
     next(err);
   }
 };
 
-// ✅ Atualizar um agendamento existente
+// ✅ Atualizar agendamento (ATUALIZADO)
 exports.updateAppointment = async (req, res, next) => {
   try {
     const { appointmentId } = req.params;
-    const { appointmentDate, service, notes } = req.body;
+    
+    if (!mongoose.Types.ObjectId.isValid(appointmentId)) {
+      return res.status(400).json({
+        success: false,
+        message: "ID inválido"
+      });
+    }
 
-    // Encontramos e atualizamos o agendamento no banco de dados
+    const updatedData = {
+      ...req.body,
+      date: req.body.appointmentDate // Mantém compatibilidade
+    };
+
     const appointment = await Appointment.findByIdAndUpdate(
       appointmentId,
-      { date: appointmentDate, service, notes },
-      { new: true, runValidators: true } // Retorna o documento atualizado
-    );
+      updatedData,
+      { new: true, runValidators: true }
+    )
+      .populate('user', 'name')
+      .populate('artistId', 'name');
 
     if (!appointment) {
       return res.status(404).json({
         success: false,
-        message: "Agendamento não encontrado.",
+        message: "Agendamento não encontrado"
       });
     }
 
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
-      message: "Agendamento atualizado com sucesso!",
-      data: appointment,
+      message: "Agendamento atualizado!",
+      data: appointment
     });
+
   } catch (err) {
     next(err);
   }
 };
 
-// ✅ Cancelar um agendamento pelo ID
+// ✅ Cancelar agendamento (ATUALIZADO)
 exports.cancelAppointment = async (req, res, next) => {
   try {
     const { appointmentId } = req.params;
 
-    // Procura o agendamento pelo ID
-    const appointment = await Appointment.findById(appointmentId);
+    if (!mongoose.Types.ObjectId.isValid(appointmentId)) {
+      return res.status(400).json({
+        success: false,
+        message: "ID inválido"
+      });
+    }
+
+    const appointment = await Appointment.findByIdAndUpdate(
+      appointmentId,
+      { status: "cancelled", cancelledAt: Date.now() },
+      { new: true }
+    )
+      .populate('user', 'name')
+      .populate('artistId', 'name');
 
     if (!appointment) {
       return res.status(404).json({
         success: false,
-        message: "Agendamento não encontrado ou não autorizado."
+        message: "Agendamento não encontrado"
       });
     }
 
-    // Atualiza o status para "cancelled" (usando valor válido para o enum)
-    appointment.status = "cancelled";
-    await appointment.save();
-
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
-      message: "Agendamento cancelado com sucesso",
+      message: "Agendamento cancelado",
       data: appointment
     });
+
   } catch (err) {
     next(err);
   }
 };
-
