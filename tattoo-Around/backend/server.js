@@ -1,4 +1,3 @@
-const validateObjectId = require('./middleware/validateObjectId');
 const express = require('express');
 const dotenv = require("dotenv");
 const connectDB = require("./config/db.js");
@@ -55,7 +54,7 @@ connectDB().then(() => {
   app.get('/', (req, res) => {
     res.send('Bem-vindo(a) ao Tattoo Around API!');
   });  
-
+  const validateObjectId = require('./middleware/validateObjectId');
   const authRoutes = require('./routes/authRoutes');
   const artistRoutes = require('./routes/artistRoutes');
   const reviewRoutes = require('./routes/reviewRoutes');
